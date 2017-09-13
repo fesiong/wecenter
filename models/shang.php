@@ -167,7 +167,7 @@ class shang_class extends AWS_MODEL
                     $input->SetBody($note);
                     $input->SetAttach("item_id:" . $order['item_id']);
                     $input->SetOut_trade_no($order['order_id']);
-                    $input->SetTotal_fee($order['price']);//单位是分
+                    $input->SetTotal_fee($order['money']);//单位是分
                     $input->SetTime_start(date("YmdHis"));
                     $input->SetTime_expire(date("YmdHis", time() + 3600));
                     $input->SetGoods_tag($order['note']);
