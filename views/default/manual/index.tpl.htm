@@ -8,7 +8,7 @@
 			<ul>
 			<?php foreach($this->category_list as $category){ ?>
 				<li<?php if($this->manual_info['category_id'] == $category['id']){ ?> class="open"<?php } ?>>
-					<a class="category-item" href="javascript:;"><span class="arrow"></span> 序言</a>
+					<a class="category-item" href="javascript:;"><span class="arrow"></span> <?php echo $category['title']; ?></a>
 					<ul>
 					<?php foreach($this->manual_list as $manual){ ?>
 						<?php if($manual['category_id'] != $category['id']){continue;} ?>
