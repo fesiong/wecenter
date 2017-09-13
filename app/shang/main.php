@@ -11,6 +11,10 @@ if (!defined('IN_ANWSION'))
     die;
 }
 
+require_once ROOT_PATH . 'models/shang/WxPay.Api.php';
+require_once ROOT_PATH . 'models/shang/WxPay.NativePay.php';
+require_once ROOT_PATH . 'models/shang/WxPay.Notify.php';
+
 class main extends AWS_CONTROLLER
 {
     public function get_access_rule()
