@@ -139,6 +139,26 @@ class Services_BBCode
         return '<' . $list_type . '>' . preg_replace("/[\n\r?]/", "", $match[2]) . '</' . $list_type . '>';
 	}
 
+	private function _table_callback($match)
+	{
+		return "<table class=\"table table-bordered\">" . preg_replace("/[\n\r?]$/", "", $match[1]) . "</table>";
+	}
+
+	private function _tr_callback($match)
+	{
+		return "<tr>" . preg_replace("/[\n\r?]$/", "", $match[1]) . "</tr>";
+	}
+
+	private function _td_callback($match)
+	{
+		return "<td>" . preg_replace("/[\n\r?]$/", "", $match[1]) . "</td>";
+	}
+
+	private function _th_callback($match)
+	{
+		return "<th>" . preg_replace("/[\n\r?]$/", "", $match[1]) . "</th>";
+	}
+
     public function __construct()
     {
 	    // Replace [code]...[/code] with <pre><code>...</code></pre>
@@ -186,6 +206,11 @@ class Services_BBCode
 
         // Replace [list=1|a]...[/list] with <ul|ol><li>...</li></ul|ol>
         $this->bbcode_table["/\[list=(1|a)\](.*?)\[\/list\]/is"] = '_list_advance_callback';
+
+        $this->bbcode_table["/\[table\](.*?)\[\/table\]/is"] = '_table_callback';
+        $this->bbcode_table["/\[tr\](.*?)\[\/tr\]/is"] = '_tr_callback';
+        $this->bbcode_table["/\[td\](.*?)\[\/td\]/is"] = '_td_callback';
+        $this->bbcode_table["/\[th\](.*?)\[\/th\]/is"] = '_th_callback';
 
         return $this;
     }

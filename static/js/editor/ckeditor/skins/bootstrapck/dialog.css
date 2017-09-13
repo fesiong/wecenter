@@ -516,10 +516,10 @@ a.cke_dialog_ui_button_ok:hover
     color: #a0a0a0;
 }.cke_dialog_body .cke_label
 {
-    display: none;
+    display: block;
 }.cke_dialog_body label
 {
-    display: none;
+    display: block;
 
     margin-bottom: 3px;
 

@@ -332,6 +332,7 @@ a.cke_button{padding:8px 10px !important;cursor: pointer !important;border-radiu
 .cke_button__maximize{position: absolute !important;right: 0;top: 0;}
 .cke_button__maximize_icon:before {content: "\e65d";}
 .cke_button__removeformat_icon:before {content: "\e65f";}
+.cke_button__table_icon:before {content: "\e653";}
 .uploader{margin-top: 2px; border: 0 !important;}
 
 /* iCheck plugin */
