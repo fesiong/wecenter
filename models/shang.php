@@ -178,7 +178,7 @@ class shang_class extends AWS_MODEL
                     $url = $result["code_url"];
                     $qr_code = get_js_url('/shang/qrcode/?data=' . urlencode($url));
 
-                    H::ajax_json_output(AWS_APP::RSM(null, 1, '<div style="text-align:center"><div>打开微信扫一扫 支付</div><img width="200" src="'.$qr_code.'"></div><script>setInterval(function(){$.get("'. get_js_url('shang/check_pay/' . $order['order_id']) .'", function(data){if(data == 1){FE.alert("付款成功，感谢您的支持！");setTimeout(function(){window.location.href = "'.get_js_url(str_replace('/?/', '/', $_SERVER['REQUEST_URI'])).'";}, 3000);}});},5000);</script>'));
+                    H::ajax_json_output(AWS_APP::RSM(null, 1, '<div style="text-align:center"><div>打开微信扫一扫 支付</div><img width="200" src="'.$qr_code.'"></div><script>setInterval(function(){$.get("'. get_js_url('shang/check_pay/' . $order['order_id']) .'", function(data){if(data == 1){AWS.alert("付款成功，感谢您的支持！");setTimeout(function(){window.location.href = "'.get_js_url(str_replace('/?/', '/', $_SERVER['REQUEST_URI'])).'";}, 3000);}});},5000);</script>'));
                     //END
                 }else{
                     H::ajax_json_output(AWS_APP::RSM(null, -1, '系统没开启微信支付！'));
