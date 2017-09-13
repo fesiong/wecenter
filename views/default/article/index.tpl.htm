@@ -300,8 +300,8 @@
 
 <script type="text/javascript">
     var ANSWER_EDIT_TIME = <?php echo get_setting('answer_edit_time'); ?>;
-    var CAN_PAY_WEIXIN   = "<?php echo get_setting('alipay_partner'); ?>";
-    var CAN_PAY_ALIPAY   = "<?php echo get_setting('wxpay_openid'); ?>";
+    var CAN_PAY_WEIXIN   = "<?php echo get_setting('wxpay_openid'); ?>";
+    var CAN_PAY_ALIPAY   = "<?php echo get_setting('alipay_partner'); ?>";
     var CAN_PAY_BALANCE  = <?php echo $this->user_info['balance']/100; ?>;
 
     $(document).ready(function () {
