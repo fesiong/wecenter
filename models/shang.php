@@ -174,7 +174,7 @@ class shang_class extends AWS_MODEL
                     $input->SetNotify_url(get_js_url('/shang/wx_notify/'));
                     $input->SetTrade_type("NATIVE");
                     $input->SetProduct_id($order['item_id']);
-                    //$result = $notify->GetPayUrl($input);
+                    $result = $notify->GetPayUrl($input);
                     $url = $result["code_url"];
                     $qr_code = get_js_url('/shang/qrcode/?data=' . urlencode($url));
 

@@ -546,7 +546,6 @@ class WxPayApi extends AWS_MODEL
 		$ch = curl_init();
 		//设置超时
 		curl_setopt($ch, CURLOPT_TIMEOUT, $second);
-		
 		//如果有配置代理这里就设置代理
 		if(WxPayConfig::CURL_PROXY_HOST != "0.0.0.0" 
 			&& WxPayConfig::CURL_PROXY_PORT != 0){
@@ -569,6 +568,7 @@ class WxPayApi extends AWS_MODEL
 			curl_setopt($ch,CURLOPT_SSLKEYTYPE,'PEM');
 			curl_setopt($ch,CURLOPT_SSLKEY, WxPayConfig::SSLKEY_PATH);
 		}
+
 		//post提交方式
 		curl_setopt($ch, CURLOPT_POST, TRUE);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
