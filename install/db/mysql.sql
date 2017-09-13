@@ -473,6 +473,10 @@ CREATE TABLE `[#DB_PREFIX#]question` (
   `received_email_id` int(10) DEFAULT NULL,
   `chapter_id` int(10) UNSIGNED DEFAULT NULL,
   `sort` tinyint(2) UNSIGNED NOT NULL DEFAULT '0',
+  `money` int(10) NOT NULL DEFAULT '0',
+  `expity_date` SMALLINT(3) NULL DEFAULT '3',
+  `has_pay` tinyint(1) NULL DEFAULT '0',
+  `pay_time` int(10) NULL DEFAULT '0',
   PRIMARY KEY (`question_id`),
   KEY `category_id` (`category_id`),
   KEY `update_time` (`update_time`),
@@ -764,6 +768,7 @@ CREATE TABLE `[#DB_PREFIX#]users` (
   `email_settings` varchar(255) DEFAULT '',
   `weixin_settings` varchar(255) DEFAULT '',
   `recent_topics` text,
+  `balance` int(10) DEFAULT '0',
   PRIMARY KEY (`uid`),
   KEY `user_name` (`user_name`),
   KEY `email` (`email`),
@@ -788,6 +793,8 @@ CREATE TABLE `[#DB_PREFIX#]users_attrib` (
   `signature` varchar(255) DEFAULT NULL COMMENT '个人签名',
   `qq` bigint(15) DEFAULT NULL,
   `homepage` varchar(255) DEFAULT NULL,
+  `alipay_name`  varchar(255) DEFAULT NULL COMMENT '支付宝提现姓名',
+  `alipay_account`  varchar(255) DEFAULT NULL COMMENT '支付宝提现账号',
   PRIMARY KEY (`id`),
   KEY `uid` (`uid`)
 ) ENGINE=[#DB_ENGINE#] DEFAULT CHARSET=utf8 COMMENT='用户附加属性表';
@@ -1291,6 +1298,69 @@ CREATE TABLE `[#DB_PREFIX#]help_chapter` (
   KEY `url_token` (`url_token`),
   KEY `sort` (`sort`)
 ) ENGINE=[#DB_ENGINE#] DEFAULT CHARSET=utf8 COMMENT='帮助中心';
+
+CREATE TABLE `[#DB_PREFIX#]manual`(
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `title` varchar(100) NULL,
+  `keywords` varchar(120) NULL,
+  `description` varchar(250) NULL,
+  `message` text NULL,
+  `views` int DEFAULT '0' NULL,
+  `category_id` int DEFAULT '0' NULL,
+  `add_time` int DEFAULT '0' NULL,
+  `sort` int DEFAULT '0' NULL,
+  PRIMARY KEY (`id`),
+  KEY `sort` (`sort`, `category_id`),
+  KEY `category` (`category_id`),
+  KEY `sort_1` (`sort`)
+) ENGINE=[#DB_ENGINE#] DEFAULT CHARSET=utf8 COMMENT='开发文档';
+
+CREATE TABLE `[#DB_PREFIX#]shang` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT '0',
+  `order_id` bigint(20) DEFAULT NULL,
+  `add_time` int(11) DEFAULT '0',
+  `money` int(11) DEFAULT '0',
+  `pay_way` tinyint(1) DEFAULT '1',
+  `terrace_id` varchar(64) DEFAULT NULL,
+  `has_pay` tinyint(1) DEFAULT '0',
+  `pay_time` int(11) DEFAULT '0',
+  `item_type` tinyint(1) DEFAULT '1',
+  `item_id` int(11) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=[#DB_ENGINE#] AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `[#DB_PREFIX#]flow` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) DEFAULT '0',
+  `money` int(11) DEFAULT '0',
+  `add_time` int(11) DEFAULT '0',
+  `order_id` bigint(20) DEFAULT NULL,
+  `item_id` int(11) DEFAULT '0',
+  `item_type` tinyint(1) DEFAULT '1',
+  `item_uid` int(11) DEFAULT '0',
+  `pay_type` tinyint(1) DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=[#DB_ENGINE#] AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `[#DB_PREFIX#]withdraw` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` tinyint(1) DEFAULT '1',
+  `uid` int(11) DEFAULT '0',
+  `add_time` int(11) DEFAULT '0',
+  `money` int(11) DEFAULT '0',
+  `status` tinyint(1) DEFAULT '0',
+  `pay_time` int(11) DEFAULT '0',
+  `pay_account` varchar(64) DEFAULT NULL,
+  `pay_name` varchar(64) DEFAULT NULL,
+  `order_id` bigint(20) DEFAULT NULL,
+  `terrace_id` varchar(64) DEFAULT NULL,
+  `info` varchar(255) DEFAULT NULL,
+  `real_money` INT(11) NULL DEFAULT '11' COMMENT '实际提现到账金额',
+  `last_time` INT(11) NULL DEFAULT '0',
+  `times` INT(11) NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=[#DB_ENGINE#] AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 INSERT INTO `[#DB_PREFIX#]category`(`title`,`type`) VALUES
 ('默认分类', 'question');
