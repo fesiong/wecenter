@@ -1,0 +1,58 @@
+<?php TPL::output('admin/global/header.tpl.htm'); ?>
+<?php TPL::output('admin/global/nav_menu.tpl.htm'); ?>
+
+<div class="aw-content-wrap">
+    <div class="mod">
+        <div class="mod-head">
+            <h3>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#list" data-toggle="tab"><?php _e('开发文档列表'); ?></a></li>
+                    <li><a href="admin/manual/publish/"><?php _e('添加'); ?></a></li>
+                </ul>
+            </h3>
+        </div>
+        <div class="mod-body tab-content">
+            <div class="tab-pane active" id="list">
+
+                <form id="batchs_form" action="admin/ajax/manual_manage/" method="post">
+                <input type="hidden" id="action" name="action" value="del" />
+                <div class="table-responsive">
+                <?php if ($this->list) { ?>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><input type="checkbox" class="check-all"></th>
+                                <th><?php _e('标题'); ?></th>
+                                <th><?php _e('分类'); ?></th>
+                                <th><?php _e('浏览'); ?></th>
+                                <th><?php _e('发布时间'); ?></th>
+                                <th><?php _e('操作'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($this->list AS $key => $val) { ?>
+                            <tr>
+                                <td><input type="checkbox" name="article_ids[]" value="<?php echo $val['id']; ?>"></td>
+                                <td><a href="manual/<?php echo $val['id']; ?>" target="_blank"><?php echo $val['title']; ?></a></td>
+                                <td><?php echo $val['category_info']['title']; ?></td>
+                                <td><?php echo $val['views']; ?></td>
+                                <td><?php echo date_friendly($val['add_time']); ?></td>
+                                <td><a href="admin/manual/publish/<?php echo $val['id']; ?>" class="icon icon-edit md-tip" title="编辑"></a></td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                <?php } ?>
+                </div>
+                </form>
+                <div class="mod-table-foot">
+                    <?php echo $this->pagination; ?>
+
+                    <a class="btn btn-danger" onclick="$('#action').val('del'); AWS.ajax_post($('#batchs_form'));" href="javascript:;"><?php _e('删除'); ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php TPL::output('admin/global/footer.tpl.htm'); ?>

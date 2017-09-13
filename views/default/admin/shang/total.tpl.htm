@@ -1,0 +1,80 @@
+<?php TPL::output('admin/global/header.tpl.htm'); ?>
+<?php TPL::output('admin/global/nav_menu.tpl.htm'); ?>
+
+<div class="aw-content-wrap" id="user_list">
+    <div class="mod">
+        <div class="mod-head">
+            <h3>
+                <ul class="nav nav-tabs">
+					<li><a href="admin/shang/list/"><?php _e('打赏记录'); ?></a></li>
+                    <li><a href="admin/shang/withdraw_list/"><?php _e('提现申请'); ?></a></li>
+                    <li><a href="admin/shang/payment/"><?php _e('网站进账'); ?></a></li>
+                    <li class="active"><a href="admin/shang/total/"><?php _e('进账统计'); ?></a></li>
+                </ul>
+            </h3>
+        </div>
+        <div class="mod-body tab-content">
+            <div class="tab-pane active" id="list">
+                <div class="alert alert-info">
+                    所有进账,只统计支付宝和微信支付,不统计余额支付.
+                </div>
+                <form method="post" action="admin/shang/total/" onsubmit="return false;" id="search_form" class="form-horizontal" role="form">
+                    <input name="action" type="hidden" value="search" />
+                    <input name="uid" id="user_id" type="hidden" value="" />
+                    <div class="form-group echart-date">
+                        <label class="col-sm-2 col-xs-3 control-label nopadding">统计时间段:</label>
+                        <div class="col-sm-8 col-xs-9">
+                            <div class="row">
+                                <div class="col-sm-6 mod-double">
+                                    <input type="text" class="form-control mod-data date-start" name="start_date" value="<?php if($_GET['start_date']){echo $_GET['start_date'];} ?>">
+                                    <i class="icon icon-date"></i>
+                                </div>
+                                <span class="mod-symbol col-xs-1 col-sm-1">
+                                   -
+                               </span>
+                                <div class="col-sm-6 mod-double">
+                                    <input type="text" class="form-control mod-data date-end" name="end_date" value="<?php echo $_GET['end_date']; ?>">
+                                    <i class="icon icon-date"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-5 col-xs-8">
+                            <button type="button" onclick="AWS.ajax_post($('#search_form'));" class="btn btn-primary"><?php _e('搜索'); ?></button>
+                        </div>
+                    </div>
+                </form>
+                <div class="table-responsive">
+                    <form method="post" action="" id="course_form">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><?php _e('所有进账'); ?></th>
+                                <th><?php _e('所有提现'); ?></th>
+                                <th><?php _e('用户账户余额'); ?></th>
+                                <th><?php _e('提现申请中金额'); ?></th>
+                                <th><?php _e('时间段内进账'); ?></th>
+                                <th><?php _e('时间段内提现'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><?php echo number_format($this->total_send / 100, 2); ?></td>
+                                <td><?php echo number_format($this->total_withdraw / 100, 2); ?></td>
+                                <td><?php echo number_format($this->total_balance / 100, 2); ?></td>
+                                <td><?php echo number_format($this->total_withdraw_apply / 100, 2); ?></td>
+                                <td><?php echo number_format($this->last_send / 100, 2); ?></td>
+                                <td><?php echo number_format($this->last_withdraw / 100, 2); ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php TPL::output('admin/global/footer.tpl.htm'); ?>

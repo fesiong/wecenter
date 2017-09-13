@@ -132,8 +132,9 @@ textarea.form-control{padding:6px;}
 .nav ul li i{display: block;margin:0 0 2px;font-size: 20px;}
 .nav ul li .icon-tips{position: absolute;right: 10px;top: 5px;margin:0;}
 .nav .aw-popover{display:none;position:absolute;bottom:49px;z-index:0;width:100%;height: 102px;background-color:#66b7ff;border-top: 1px solid #4dabff;}
+.nav .aw-popover ul{display: -webkit-box;display: -webkit-flex;display: flex;}
 .nav .aw-popover.active ul li{width: 25%;}
-.nav .aw-popover ul li{width:33.333%;margin:15px 0;}
+.nav .aw-popover ul li{width:33.333%;margin:15px 0;-webkit-box-flex: 1; -webkit-flex: 1; flex: 1;}
 .nav .aw-popover ul li .badge{position: absolute;right: 10px;top: 0;}
 .nav .aw-popover a{color: #fff;}
 .nav .aw-popover a:active .label{background-color: #3097F2;}
@@ -482,3 +483,49 @@ footer p{margin:0;}
     transform: rotate(359deg);
   }
 }
+
+/* 打赏css */
+.operate a.shang-btn{margin-left: 0;color: #fdccb4 !important;background: #fff;border-radius: 4px;border: 1px solid #fdead6;}
+.operate a.shang-btn:hover{background: #fdead6;color: #f60!important;}
+.money-list{padding: 0 15px;}
+.money-box{padding: 10px;}
+.money-box-inner{border: 1px solid #e6e6e6;padding: 10px 0; border-radius: 3px;display: block;text-align: center;}
+.money-box-inner.active{background: rgba(236, 90, 18, 0.04); border: 1px solid #ec5a12;}
+.money-box-inner span{display: block;}
+.money-box-inner .money{color: #333;font-size: 18px;}
+.money-box-inner.active .money{color: #ec5a12;}
+.money-box-inner .tips{color: #999;}
+.pay-way{overflow: hidden;}
+.pay-way a{width: 30%; text-align: center;border: 1px solid #e6e6e6;padding: 10px 0; border-radius: 3px;font-size: 18px;color: #666;margin-right:5%;display: block;float: left;}
+.pay-way a.active{background: rgba(236, 90, 18, 0.04); border: 1px solid #ec5a12;}
+.pay-way a:last-child{margin-right: 0;}
+.pay-way a.disabled{opacity: 0.7;cursor: not-allowed;}
+.article-shang{margin:50px;text-align: center;}
+.article-shang a.pay {background-color: #ff6060;color: #fff;border: 1px solid #ff6060;}
+.article-shang a {position: relative;display: inline-block;width: 60px;height: 60px;text-align: center;line-height: 55px;margin: 0 10px;border-radius: 50%;font-size: 18px;border: 1px solid #e6e6e6;}
+.m-article-shang{padding:20px;margin:0;}
+.last-shang{margin:15px 0;position:relative;overflow: hidden;}
+.shang-title{position:absolute; font-weight: bold;}
+.shang-list{display: table;padding-left: 80px;}
+.shang-list li{ display: table-cell; white-space: nowrap;padding-right:15px;}
+.dashang-header{background: #f60;}
+.dashang-header .item-info{padding:20px 0; color:#fff;}
+.dashang-header .item-info h3{font-size: 1.5em;}
+.user-avatar{text-align: center;position: relative;top:-40px;}
+.user-avatar img{border-radius: 50%; width:80px;border:3px solid #fff;background: #fff;}
+.center-line{position: relative;text-align: center;}
+.center-line hr{border-color: #999;}
+.center-line span{position: relative;display: block; top:-30px;}
+.center-line span a{padding:0 5px;background: #f1f1f1;color:#666;}
+#pay-money{text-align: center;}
+#pay-money a{margin:5px;}
+.btn-pay{color: #f60;background-color: #fff;border-color: #f60;}
+.btn-pay:hover,.btn-pay.active{color: #fff;background-color: #f60;border-color: #f60;}
+.pay-money-input-div #show-input{color:#f60;padding:10px;}
+.pay-money-input-div{padding: 20px 50px; text-align: center;}
+.pay-money-input-div .input-area{position:relative;margin-top: 10px;}
+.pay-way label{
+  width: 32%;
+}
+.m-money-box{display: -webkit-box; display: -webkit-flex; display: flex;}
+.m-money-box a{-webkit-box-flex: 1; -webkit-flex: 1; flex: 1;}

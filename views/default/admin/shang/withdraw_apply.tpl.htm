@@ -1,0 +1,83 @@
+<?php TPL::output('admin/global/header.tpl.htm'); ?>
+<?php TPL::output('admin/global/nav_menu.tpl.htm'); ?>
+
+<div class="aw-content-wrap">
+	<form action="admin/shang/ajax_withdraw_apply/" id="order_form" method="post" onsubmit="return false">
+	<input type="hidden" name="id" value="<?php echo $this->withdraw_info['id']; ?>" />
+	<input type="hidden" name="status" id="status" value="ok" />
+	<div class="mod">
+		<div class="mod-head">
+            <h3>
+				<span class="pull-left"></span>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="javascript:;"><?php _e('详细信息'); ?></a></li>
+                </ul>
+            </h3>
+        </div>
+		<div class="tab-content mod-content">
+			<table class="table table-striped">
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('支付订单号'); ?>:</span>
+						<span class="col-sm-5 col-xs-8">
+						<input type="text" id="terrace_id" class="form-control" value="<?php echo $this->withdraw_info['terrace_id']; ?>" name="terrace_id" <?php if($this->withdraw_info['status'] != 'wait'){echo 'disabled';} ?>/>
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('提现状态'); ?>:</span>
+						<span class="col-sm-5 col-xs-8">
+						<?php if($this->withdraw_info['status'] == shang_class::STATUS_OK){echo '通过';}else if($this->withdraw_info['status'] == shang_class::STATUS_WAIT){echo '审核中';}else{echo '拒绝';} ?>
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('申请提现者'); ?>:</span>
+						<span class="col-sm-7 col-xs-8"><?php echo $this->withdraw_info['user_info']['user_name']; ?><br>
+							E-mail：<?php echo $this->withdraw_info['user_info']['email']; ?><br>
+							手机：<?php echo $this->withdraw_info['user_info']['mobile']; ?><br>
+							真实姓名：<?php echo $this->withdraw_info['user_info']['alipay_name']; ?><br>
+							支付宝账号：<?php echo $this->withdraw_info['user_info']['alipay_account']; ?><br>
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('申请时间'); ?>:</span>
+						<span class="col-sm-5 col-xs-8"><?php echo date('Y年m月d日 H时i分s秒',$this->withdraw_info['add_time']); ?></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('申请提现金额'); ?>:</span>
+						<span class="col-sm-5 col-xs-8"><?php echo ($this->withdraw_info['price'] / 100); ?>元</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('附加信息'); ?>:</span>
+						<span class="col-sm-5 col-xs-8"><input type="text" class="form-control" value="<?php echo $this->withdraw_info['info']; ?>" name="info" <?php if($this->withdraw_info['status'] != shang_class::STATUS_WAIT){echo 'disabled';} ?>/></span>
+					</td>
+				</tr>
+
+				<tfoot>
+				<tr>
+					<td>
+						<a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="btn btn-default">返回上一页</a>
+						<a href="admin/shang/withdraw_list/" class="btn btn-default">返回列表</a>
+						<?php if($this->withdraw_info['status'] == 'wait'){ ?>
+						<a href="javascript:;" onclick="$('#status').val('ok');if($('#terrace_id').val().length < 1){alert('支付订单号不能为空');return false;};AWS.ajax_post($('#order_form'));" class="btn btn-primary">同意完成提现</a>
+						<a href="javascript:;" onclick="$('#status').val('close');AWS.ajax_post($('#order_form'));" class="btn btn-warning">拒绝提现</a>
+						<?php } ?>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+		</div>
+	</form>
+</div>
+
+<?php TPL::output('admin/global/footer.tpl.htm'); ?>

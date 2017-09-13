@@ -65,7 +65,7 @@ var AW_TEMPLATE = {
 							'<h3 class="modal-title" id="myModalLabel">' + _t('提示信息') + '</h3>'+
 						'</div>'+
 						'<div class="modal-body">'+
-							'<p>{{message}}</p>'+
+							'<p>{{{message}}}</p>'+
 						'</div>'+
 					'</div>'+
 				'</div>'+
@@ -629,5 +629,64 @@ var AW_TEMPLATE = {
 						'</div>'+
 					'</div>'+
 				'</div>'+
-			'</div>'
+			'</div>',
+
+		'paymentBox' :
+		'<div class="modal fade alert-box aw-question-redirect-box">\
+	        <div class="modal-dialog">\
+	            <div class="modal-content">\
+	                <div class="modal-header">\
+	                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>\
+	                    <h3 class="modal-title" id="myModalLabel"><img src="{{user_avatar}}" />对[ {{user_name}} ]打赏</h3>\
+	                </div>\
+	                <div class="modal-body">\
+	                    <div class="alert alert-danger hide error_message"> <i class="icon icon-delete"></i> <em></em></div>\
+	                    <div class="money-list" id="pay-money">\
+	                        <div class="row">\
+	                            <div class="col-md-4 money-box">\
+	                            	<a class="money-box-inner" data-id="1"><span class="money">1 元</span><span class="tips">路过一下</span></a>\
+	                            </div>\
+	                            <div class="col-md-4 money-box">\
+	                            	<a class="money-box-inner active" data-id="3"><span class="money">3 元</span><span class="tips">意思一下</span></a>\
+	                            </div>\
+	                            <div class="col-md-4 money-box">\
+	                            	<a class="money-box-inner" data-id="8"><span class="money">8 元</span><span class="tips">了解一下</span></a>\
+	                            </div>\
+	                            <div class="col-md-4 money-box">\
+	                            	<a class="money-box-inner" data-id="18"><span class="money">18 元</span><span class="tips">支持一下</span></a>\
+	                            </div>\
+	                            <div class="col-md-4 money-box">\
+	                            	<a class="money-box-inner" data-id="28"><span class="money">28 元</span><span class="tips">有钱任性</span></a>\
+	                            </div>\
+	                            <div class="col-md-4 money-box">\
+	                            	<a class="money-box-inner" data-id="88"><span class="money">88 元</span><span class="tips">我是土豪</span></a>\
+	                            </div>\
+	                        </div>\
+	                    </div>\
+	                    <div class="modal-body" style="text-align:center;"><a style="color:#f60;" id="show-input">自定义打赏金额</a></div>\
+	                    <div id="formbox" class="input-area hide">\
+	                        <form id="quick_pay" method="post" action="{{pay_action}}" onsubmit="return false;">\
+	                            <input type="hidden" id="pay-money-num" name="pay_money" value="3">\
+	                            <input type="hidden" name="item_id" value="{{item_id}}">\
+	                            <input type="hidden" name="item_type" value="{{item_type}}">\
+	                            <input type="hidden" id="pay-way-input" name="pay_way" value="weixin">\
+	                            <div class="input-group">\
+	                            	<input type="text" id="pay-money-input" class="form-control" placeholder="请输入您要打赏金额数字">\
+	                            	<span class="input-group-addon" id="sizing-addon2">元</span>\
+	                            </div>\
+	                        </form>\
+	                    </div>\
+	                    <div class="small">选择支付方式</div>\
+	                    <div class="modal-body pay-way">\
+	                    	<a class="active disabled pay-weixin" href="javascript:;" data-id="weixin">微信支付</a>\
+	                    	<a class="disabled pay-alipay" href="javascript:;" data-id="alipay">支付宝</a>\
+	                    	<a class="disabled pay-balance" href="javascript:;" data-id="balance">余额支付</a>\
+	                    </div>\
+	                    <div class="text-center">\
+	                        <button class="btn btn-large btn-danger" onclick="AWS.ajax_post($(\'#quick_pay\'), AWS.ajax_processer, \'error_message\');return false;">确定打赏</button>\
+	                    </div>\
+	                </div>\
+	            </div>\
+	        </div>\
+	    </div>',
 }

@@ -282,7 +282,13 @@ var AWS =
 					case 'default':
 					case 'ajax_post_alert':
 					case 'error_message':
-						window.location.reload();
+						if(result.err){
+							AWS.alert(result.err, function(){
+								window.location.reload();
+							});
+						}else{
+							window.location.reload();
+						}
 					break;
 
 					case 'ajax_post_modal':
@@ -438,11 +444,12 @@ var AWS =
 	},
 
 	// 警告弹窗
-	alert: function (text)
+	alert: function (text, callback)
 	{
 		if ($('.alert-box').length)
 		{
 			$('.alert-box').remove();
+			$('.modal-backdrop').remove();
 		}
 
 		$('#aw-ajax-box').append(Hogan.compile(AW_TEMPLATE.alertBox).render(
@@ -451,6 +458,12 @@ var AWS =
 		}));
 
 		$(".alert-box").modal('show');
+
+		if(typeof callback == 'function') {
+            $(".alert-box").on('hidden.bs.modal', function (e) {
+                callback();
+            });
+        }
 	},
 
 	/**
@@ -1400,7 +1413,79 @@ var AWS =
 				selector.animate({ 'left': -10 }, 50);
 			}
 		}
-	}
+	},
+
+	//打赏
+	shang: function(data)
+	{
+	    var template = Hogan.compile(AW_TEMPLATE.paymentBox).render(
+	        {
+	            'user_name': data.user_name,
+	            'item_id':data.item_id,
+	            'item_type':data.item_type,
+	            'pay_action': window.location.href
+	        });
+	    if ($('.alert-box').length)
+	    {
+	        $('.alert-box').remove();
+	    }
+	    $('#aw-ajax-box').html(template).show();
+		if(typeof (CAN_PAY_WEIXIN) != 'undefined' && CAN_PAY_WEIXIN){
+	    	$('.pay-weixin').removeClass('disabled');
+	    }
+	    if(typeof (CAN_PAY_ALIPAY) != 'undefined' && CAN_PAY_ALIPAY){
+	    	$('.pay-alipay').removeClass('disabled');
+	    }
+	    var balance = 0;
+	    if(typeof (CAN_PAY_BALANCE) != 'undefined' && CAN_PAY_BALANCE){
+	    	$('.pay-balance').removeClass('disabled');
+	    	balance = CAN_PAY_BALANCE;
+	    }
+	    $('#pay-money').find('a').click(function(){
+	        $(this).parents('#pay-money').find('a').removeClass("active");
+	        $(this).addClass("active");
+	        $('#pay-money-num').val($(this).data('id'));
+	        if($('#pay-money-num').val() > balance){
+	        	$('.pay-balance').addClass('disabled').removeClass('active');
+	        	if($('#pay-way-input').val() == 'balance'){
+	        		$('#pay-way-input').val('weixin');
+	        		$('.pay-weixin').addClass('active');
+	        	}
+	        }else{
+	        	$('.pay-balance').removeClass('disabled');
+	        }
+	    });
+	    $('#show-input').click(function(){
+	        if($('.input-area').hasClass("hide")){
+	            $('.input-area').removeClass('hide');
+	        }else{
+	            $('.input-area').addClass('hide');
+	        }
+	    });
+	    $('#pay-money-input').keyup(function(){
+	        var padden = /\D/g;
+	        var cash = $('#pay-money-input').val().replace(padden,'');
+	        $('#pay-money-input').val(cash);
+	        $('#pay-money-num').val(cash);
+	        if($('#pay-money-num').val() > balance){
+	        	$('.pay-balance').addClass('disabled').removeClass('active');
+	        	if($('#pay-way-input').val() == 'balance'){
+	        		$('#pay-way-input').val('weixin');
+	        		$('.pay-weixin').addClass('active');
+	        	}
+	        }else{
+	        	$('.pay-balance').removeClass('disabled');
+	        }
+	    });
+	    $('.pay-way').find('a').click(function(){
+	    	if($(this).hasClass('disabled')){
+	    		return false;
+	    	}
+	    	$(this).addClass('active').siblings('a').removeClass('active');
+	    	$('#pay-way-input').val($(this).data('id'));
+	    });
+	    $(".alert-box").modal('show');
+	},
 }
 
 // 全局变量

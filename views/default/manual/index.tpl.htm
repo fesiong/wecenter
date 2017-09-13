@@ -1,0 +1,54 @@
+<?php TPL::output('global/header.tpl.htm'); ?>
+<div class="container-fluid manual-page">
+	<div class="aw-aside">
+		<div class="aside-header">
+		目录
+		</div>
+		<div class="aside-body">
+			<ul>
+			<?php foreach($this->category_list as $category){ ?>
+				<li<?php if($this->manual_info['category_id'] == $category['id']){ ?> class="open"<?php } ?>>
+					<a class="category-item" href="javascript:;"><span class="arrow"></span> 序言</a>
+					<ul>
+					<?php foreach($this->manual_list as $manual){ ?>
+						<?php if($manual['category_id'] != $category['id']){continue;} ?>
+						<li><a<?php if($this->manual_info['id'] == $manual['id']){ ?> class="active"<?php } ?> href="manual/<?php echo $manual['id']; ?>"><?php echo $manual['title']; ?></a></li>
+					<?php } ?>
+					</ul>
+				</li>
+			<?php } ?>
+			</ul>
+		</div>
+	</div>
+	<div class="aw-manual-wrap">
+		<span id="aside-btn"><i class="icon icon-bar"></i></span>
+		<div class="content">
+			<h1 class="title"><?php echo $this->manual_info['title']; ?></h1>
+			<div class="markitup-box">
+				<?php echo $this->manual_info['message']; ?>
+			</div>
+		</div>
+		<?php TPL::output('global/footer.tpl.htm'); ?>
+	</div>
+</div>
+<script>
+$(function(){
+	$('.category-item').click(function(){
+		if($(this).parent('li').hasClass('open')){
+			$(this).parent('li').removeClass('open');
+		}else{
+			$(this).parent('li').addClass('open');
+		}
+		return false;
+	});
+	$('#aside-btn').click(function(){
+		if($('.aw-manual-wrap').hasClass('active')){
+			$('.aw-aside').show();
+			$('.aw-manual-wrap').removeClass('active');
+		}else{
+			$('.aw-aside').hide();
+			$('.aw-manual-wrap').addClass('active');
+		}
+	});
+});
+</script>

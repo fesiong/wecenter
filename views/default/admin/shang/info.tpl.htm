@@ -1,0 +1,104 @@
+<?php TPL::output('admin/global/header.tpl.htm'); ?>
+<?php TPL::output('admin/global/nav_menu.tpl.htm'); ?>
+
+<div class="aw-content-wrap">
+	<input type="hidden" name="id" value="<?php echo $this->lesson_info['id']; ?>" />
+	<div class="mod">
+		<div class="mod-head">
+            <h3>
+				<span class="pull-left"></span>
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="javascript:;"><?php _e('详细信息'); ?></a></li>
+                </ul>
+            </h3>
+        </div>
+		<div class="tab-content mod-content">
+			<table class="table table-striped">
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('订单号'); ?>:</span>
+						<span class="col-sm-5 col-xs-8"><?php echo $this->order_info['order_id']; ?></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('打赏者'); ?>:</span>
+						<span class="col-sm-7 col-xs-8"><?php echo $this->order_info['user_info']['user_name']; ?>
+							E-mail：<?php echo $this->order_info['user_info']['email']; ?>
+							<?php if($this->order_info['user_info']['mobile']){ ?>
+							手机：<?php echo $this->order_info['user_info']['mobile']; ?>
+							<?php } ?>
+						</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('被打赏者'); ?>:</span>
+						<span class="col-sm-7 col-xs-8"><?php echo $this->order_info['item_user_info']['user_name']; ?></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('打赏时间'); ?>:</span>
+						<span class="col-sm-5 col-xs-8"><?php echo date('Y年m月d日 H时i分s秒',$this->order_info['add_time']); ?></span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('打赏金额'); ?>:</span>
+						<span class="col-sm-5 col-xs-8"><?php echo ($this->order_info['price'] / 100); ?>元</span>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('支付方式'); ?>:</span>
+						<span class="col-sm-5 col-xs-8"><?php
+							switch($this->order_info['shang_info']['pay_way']){
+								case shang_class::PAY_ALIPAY:
+									echo '支付宝';
+									break;
+								case shang_class::PAY_WEIXIN:
+									echo '微信';
+									break;
+								case shang_class::PAY_BALANCE:
+									echo '余额';
+									break;
+							}
+						?></span>
+					</td>
+				</tr>
+				<?php if($this->order_info['item_url']){ ?>
+				<tr>
+					<td>
+						
+							<span class="col-sm-4 col-xs-3 control-label">所属类型:</span>
+							<span class="col-sm-5 col-xs-8"><?php echo $this->order_info['item_type']; ?></span>
+
+							<span class="col-sm-4 col-xs-3 control-label">链接:</span>
+							<span class="col-sm-5 col-xs-8"><a href="<?php echo $this->order_info['item_url']; ?>" target="_blank"><?php echo $this->order_info['item_title']; ?></a></span>
+						
+					</td>
+				</tr>
+
+				<tr>
+					<td>
+						<span class="col-sm-4 col-xs-3 control-label"><?php _e('支付宝/微信订单号'); ?>:</span>
+						<span class="col-sm-5 col-xs-8"><?php echo $this->order_info['shang_info']['terrace_id']; ?></span>
+					</td>
+				</tr>
+				<?php } ?>
+
+				<tfoot>
+				<tr>
+					<td>
+						<a href="<?php echo $_SERVER['HTTP_REFERER']; ?>" class="btn btn-primary">返回上一页</a>
+						<a href="admin/shang/list/" class="btn btn-primary">返回列表</a>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+		</div>
+</div>
+
+<?php TPL::output('admin/global/footer.tpl.htm'); ?>

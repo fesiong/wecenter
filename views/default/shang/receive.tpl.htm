@@ -1,0 +1,60 @@
+<?php TPL::output('global/header.tpl.htm'); ?>
+
+<div class="aw-container-wrap">
+	<div class="container">
+		<div class="row">
+			<div class="aw-content-wrap clearfix">
+				<div class="col-sm-12 col-md-9 aw-main-content">
+					<div class="mod mod-favorite">
+						<div class="">
+							<ul class="nav nav-tabs aw-nav-tabs hidden-xs active">
+								<li<?php if ($_GET['act'] == 'send') { ?> class="active"<?php } ?>><a href="shang/send/">送出的赏金</a></li>
+								<li<?php if ($_GET['act'] == 'receive') { ?> class="active"<?php } ?>><a href="shang/receive/">收到的赏金</a></li>
+								<li<?php if ($_GET['act'] == 'withdraw_list') { ?> class="active"<?php } ?>><a href="shang/withdraw_list/">提现记录</a></li>
+								<li<?php if ($_GET['act'] == 'index') { ?> class="active"<?php } ?>><a href="shang/">概览</a></li>
+
+								<h2 class="hidden-xs">我的打赏</h2>
+							</ul>
+						</div>
+						<div class="mod-body" style="padding: 20px;">
+							<table class="table table-bordered text-center">
+						<thead>
+							<tr>
+								<th width="20%">打赏者</th>
+								<th width="8%">赏金</th>
+								<th width="12%">打赏类型</th>
+								<th width="40%">打赏来源</th>
+								<th width="20%">打赏时间</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php if($this->receive_list){foreach($this->receive_list as $key => $val){ ?>
+							<tr>
+								<td><a href="people/<?php echo $val['user_info']['url_token']; ?>" target="_blank"><?php echo $val['user_info']['user_name']; ?></a></td>
+								<td><?php echo number_format(($val['money'] / 100),2); ?></td>
+								<td><?php echo $val['item_type']; ?></td>
+								<td><a href="<?php echo $val['item_url']; ?>" target="_blank"><?php echo strip_tags(htmlspecialchars_decode($val['item_title'])); ?></a></td>
+								<td><?php echo date_friendly($val['add_time']); ?></td>
+							</tr>
+							<?php }} ?>
+						</tbody>
+					</table>
+						</div>
+						<div class="mod-footer">
+							<?php echo $this->pagination; ?>
+						</div>
+					</div>
+				</div>
+				<!-- 侧边栏 -->
+				<div class="col-sm-12 col-md-3 aw-side-bar">
+					<?php TPL::output('block/sidebar_announce.tpl.htm'); ?>
+
+					<?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
+
+				</div>
+				<!-- end 侧边栏 -->
+			</div>
+		</div>
+	</div>
+</div>
+<?php TPL::output('global/footer.tpl.htm'); ?>

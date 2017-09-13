@@ -20,7 +20,7 @@ if (!defined('IN_ANWSION'))
 
 class system_class extends AWS_MODEL
 {
-	public function fetch_category_data($type, $parent_id = 0, $order = 'sort ASC,id ASC')
+	public function fetch_category_data($type = null, $parent_id = 0, $order = 'sort ASC,id ASC')
 	{
 		static $category_list_all;
 
@@ -53,7 +53,7 @@ class system_class extends AWS_MODEL
 	}
 
 	/* 获取分类数组 */
-	public function fetch_category($type, $parent_id = 0)
+	public function fetch_category($type = null, $parent_id = 0)
 	{
 		$category_list = array();
 
@@ -80,7 +80,8 @@ class system_class extends AWS_MODEL
 				'description' => $val['description'],
 				'parent_id' => $val['parent_id'],
 				'sort' => $val['sort'],
-				'url_token' => $val['url_token']
+				'url_token' => $val['url_token'],
+                'type'      => $val['type']
 			);
 
 			if ($child_list = $this->fetch_category($type, $val['id']))
@@ -130,7 +131,7 @@ class system_class extends AWS_MODEL
 	}
 
 	/* 获取分类 JSON 数据 */
-	public function build_category_json($type, $parent_id = 0, $prefix = '')
+	public function build_category_json($type = null, $parent_id = 0, $prefix = '')
 	{
 		if (!$category_list = $this->fetch_category($type, $parent_id))
 		{
@@ -150,7 +151,8 @@ class system_class extends AWS_MODEL
 				'description' => $val['description'],
 				'sort' => $val['sort'],
 				'parent_id' => $val['parent_id'],
-				'url_token' => $val['url_token']
+				'url_token' => $val['url_token'],
+                'type'      => $val['type']
 			);
 
 			if ($val['child'])

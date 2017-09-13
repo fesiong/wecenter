@@ -1,0 +1,104 @@
+<?php TPL::output('admin/global/header.tpl.htm'); ?>
+<?php TPL::output('admin/global/nav_menu.tpl.htm'); ?>
+
+<div class="aw-content-wrap">
+	<form action="admin/manual/ajax_save_manual/" id="settings_form" method="post">
+		<input type="hidden" name="id" value="<?php echo $this->manual_info['id']; ?>" />
+	<div class="mod">
+		<div class="mod-head">
+			<h3>
+				<ul class="nav nav-tabs">
+					<li><a href="admin/manual/list/"><?php _e('开发文档列表'); ?></a></li>
+					<li class="active"><a href="admin/manual/publish/"><?php _e('添加'); ?></a></li>
+				</ul>
+			</h3>
+		</div>
+		<div class="tab-content mod-content">
+			<table class="table table-striped">
+				<tr>
+					<td>
+						<div class="form-group">
+							<span class="col-sm-2 col-xs-3 control-label"><?php _e('标题'); ?>:</span>
+							<div class="col-sm-5 col-xs-8">
+								<input type="text" name="title" class="form-control" value="<?php echo $this->manual_info['title']; ?>" />
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="form-group">
+							<span class="col-sm-2 col-xs-3 control-label"><?php _e('分类'); ?>:</span>
+							<div class="col-sm-5 col-xs-8">
+								<select name="category_id" class="form-control">
+									<option value="0">- <?php _e('请选择分类'); ?> -</option>
+									<?php echo $this->category_list; ?>
+								</select>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="form-group">
+							<span class="col-sm-2 col-xs-3 control-label"><?php _e('关键词'); ?>:</span>
+							<div class="col-sm-5 col-xs-8">
+								<input type="text" name="keywords" class="form-control" value="<?php echo $this->manual_info['keywords']; ?>" />
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="form-group">
+							<span class="col-sm-2 col-xs-3 control-label"><?php _e('描述'); ?>:</span>
+							<div class="col-sm-5 col-xs-8">
+								<textarea class="form-control" name="description"  rows="3"><?php echo $this->manual_info['description']; ?></textarea>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<div class="form-group">
+							<span class="col-sm-2 col-xs-3 control-label"><?php _e('内容'); ?>:</span>
+							<div class="col-sm-8 col-xs-8">
+								<div class="aw-mod aw-editor-box">
+									<div class="mod-head">
+										<div class="wmd-panel">
+											<textarea class="wmd-input form-control autosize editor" id="wmd-input" name="message"  rows="15"><?php echo $this->manual_info['message']; ?></textarea>
+								        </div>
+									</div>
+									<div class="mod-body uploader">
+										<p class="text-color-999"><span class="pull-right" id="question_detail_message">&nbsp;</span></p>
+										<div class="aw-upload-box">
+											<a class="btn btn-default">上传附件</a>
+											<div class="upload-container"></div>
+											<span class="text-color-999 aw-upload-tips hidden-xs"><?php _e('允许的附件文件类型'); ?>: <?php echo get_setting('allowed_upload_types'); ?></span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tfoot>
+				<tr>
+					<td>
+						<input type="button" value="<?php _e('保存'); ?>" class="btn btn-primary center-block" onclick="AWS.ajax_post($('#settings_form'));" />
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+	</div>
+	</form>
+</div>
+<script type="text/javascript">
+	var G_ADVANCED_EDITOR_ENABLE = 'Y';
+	var ATTACH_ACCESS_KEY = '<?php echo $this->attach_access_key; ?>';
+	var CATEGORY_ID = '';
+	var PUBLISH_TYPE = 'manual';
+</script>
+
+<?php TPL::output('admin/global/footer.tpl.htm'); ?>

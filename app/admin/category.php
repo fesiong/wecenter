@@ -34,11 +34,11 @@ class category extends AWS_ADMIN_CONTROLLER
 
     public function list_action()
     {
-        TPL::assign('list', json_decode($this->model('system')->build_category_json('question'), true));
+        TPL::assign('list', json_decode($this->model('system')->build_category_json(), true));
 
-        TPL::assign('category_option', $this->model('system')->build_category_html('question', 0, 0, null, false));
+        TPL::assign('category_option', $this->model('system')->build_category_html(null, 0, 0, null, false));
 
-        TPL::assign('target_category', $this->model('system')->build_category_html('question', 0, null));
+        TPL::assign('target_category', $this->model('system')->build_category_html(null, 0, null));
 
         TPL::output('admin/category/list');
     }

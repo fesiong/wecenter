@@ -115,6 +115,7 @@ class crond_class extends AWS_MODEL
         }
 
         $this->model('email')->send_mail_queue(120);
+        $this->model('shang')->auto_withdraw();
     }
 
     // 每五分钟执行
@@ -147,6 +148,9 @@ class crond_class extends AWS_MODEL
         {
             $this->model('openid_weibo_weibo')->get_msg_from_sina_crond();
         }
+
+        //自动完成悬赏的计划任务
+        $this->model('shang')->auto_question_shang();
     }
 
     // 每半小时执行

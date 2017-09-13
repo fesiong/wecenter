@@ -46,14 +46,25 @@ class setting_class extends AWS_MODEL
 		}
 
 		foreach ($vars as $key => $val)
-		{
-			$this->update('system_setting', array(
-				'value' => serialize($val)
-			), "`varname` = '" . $this->quote($key) . "'");
-		}
+        {
+            if(!$this->exists_key($key)){
+                $this->insert('system_setting',array(
+                    "varname" => $this->quote($key),
+                    'value'   => serialize($val)
+                ));
+            }else{
+                $this->update('system_setting', array(
+                    'value' => serialize($val)
+                ), "`varname` = '" . $this->quote($key) . "'");
+            }
+        }
 
 		return true;
 	}
+
+	public function exists_key($key){
+        return $this->fetch_one('system_setting', 'varname', "`varname` = '" . $this->quote($key) . "'");
+    }
 
 	public function get_ui_styles()
 	{

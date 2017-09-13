@@ -103,6 +103,7 @@ $(function()
 
     // 自动保存草稿
 	$('textarea.wmd-input').bind('blur', function() {
+		console.log($(this).val());
 		if ($(this).val() != '')
 		{
 			$.post(G_BASE_URL + '/account/ajax/save_draft/item_id-1__type-' +　PUBLISH_TYPE, 'message=' + $(this).val(), function (result) {

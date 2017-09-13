@@ -42,6 +42,10 @@ class main extends AWS_CONTROLLER
 			$this->model('notify')->read_notification($_GET['notification_id'], $this->user_id);
 		}
 
+		if($_POST['pay_money']){
+			$this->model('shang')->save_shang($this->user_id, $_POST['item_type'], $_POST['item_id'], $_POST['pay_money'], $_POST['pay_way']);
+		}
+
 		if (is_mobile())
 		{
 			HTTP::redirect('/m/question/' . $_GET['id']);
@@ -256,6 +260,9 @@ class main extends AWS_CONTROLLER
 				$answer['agree_users'] = $answer_agree_users[$answer['answer_id']];
 				$answer['agree_status'] = $answer_vote_status[$answer['answer_id']];
 
+				//start 如果需要得到该回复被打赏了多少,则在这里查询,会影响性能
+                $answer['money'] = $this->model('shang')->get_answer_shang($answer['answer_id']);
+
 				if ($question_info['best_answer'] == $answer['answer_id'] AND intval($_GET['page']) < 2)
 				{
 					$answers[0] = $answer;
@@ -302,6 +309,13 @@ class main extends AWS_CONTROLLER
 		}
 
 		$question_info['question_detail'] = FORMAT::parse_attachs(nl2br(FORMAT::parse_bbcode($question_info['question_detail'])));
+
+		//如果已经领取悬赏,则查找领取的人;
+        if($question_info['has_pay'] == shang_class::HAS_PAY){
+            $order_users = $this->model('shang')->get_shang_users_by_question_id($question_info['question_id']);
+
+            TPL::assign('order_users', $order_users);
+        }
 
 		TPL::assign('question_info', $question_info);
 		TPL::assign('question_focus', $this->model('question')->has_focus_question($question_info['question_id'], $this->user_id));

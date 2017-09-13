@@ -104,6 +104,12 @@
                                 </span>
                             </div>
                         </div>
+                        <div class="article-shang">
+                            <a class="pay aw-icon-thank-tips" href="javascript:;" data-toggle="tooltip" data-placement="bottom" data-original-title="打赏,其实是超越赞的一种表达" onclick="AWS.shang({item_id:<?php echo $this->article_info['id']; ?>, item_type:'article', user_name:'<?php  echo $this->article_info['user_info']['user_name']; ?>'});">赏</a>
+                            <?php if($this->article_info['money']){ ?>
+                            <p class="text-muted">已收到赏金:<?php echo number_format($this->article_info['money'] / 100, 2); ?>元</p>
+                            <?php } ?>
+                        </div>
                         <div class="mod-footer">
                             <?php if ($this->article_info['vote_users']) { ?>
                             <div class="aw-article-voter">
@@ -294,6 +300,9 @@
 
 <script type="text/javascript">
     var ANSWER_EDIT_TIME = <?php echo get_setting('answer_edit_time'); ?>;
+    var CAN_PAY_WEIXIN   = "<?php echo get_setting('alipay_partner'); ?>";
+    var CAN_PAY_ALIPAY   = "<?php echo get_setting('wxpay_openid'); ?>";
+    var CAN_PAY_BALANCE  = <?php echo $this->user_info['balance']/100; ?>;
 
     $(document).ready(function () {
         if ($('.aw-article-vote.disabled').length)

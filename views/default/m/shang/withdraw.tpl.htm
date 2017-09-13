@@ -1,0 +1,42 @@
+<?php TPL::output('m/header.tpl.htm'); ?>
+<div class="aw-title">
+	<?php _e('我的打赏'); ?>
+</div>
+<div class="top-category top">
+	<ul>
+		<li<?php if ($_GET['act'] == 'index') { ?> class="active"<?php } ?>><a href="m/shang/">概览</a></li>
+		<li<?php if ($_GET['act'] == 'withdraw_list') { ?> class="active"<?php } ?>><a href="m/shang/withdraw_list/">提现记录</a></li>
+		<li<?php if ($_GET['act'] == 'receive') { ?> class="active"<?php } ?>><a href="m/shang/receive/">收到的赏金</a></li>
+		<li<?php if ($_GET['act'] == 'send') { ?> class="active"<?php } ?>><a href="m/shang/send/">送出的赏金</a></li>
+	</ul>
+</div>
+	<div class="container" style="background: #fff">
+		<div class="row">
+			<div class="aw-content-wrap clearfix">
+					<div class="mod mod-favorite">
+						<div class="mod-body">
+							<div class="col-sm-6 col-sm-offset-3">
+								<div class="mod-body">
+									<div class="alert">提现金额必须为大于等于2的整数。<br>提现将会收取提现金额2%的手续费。该手续费为微信手续费。<br>提现前,请先绑定微信,否则提现将会有所延时。提现款项将会转账到该账号绑定的微信的零钱中。</div>
+									<form id="account-form" method="post" onsubmit="return false;" action="shang/ajax/withdraw_apply/">
+									<div class="form-group">
+										<label>提现金额</label>
+										<input value="0" class="form-control" name="amount" />
+										<span>您最多可以提现<?php echo number_format($this->user_info['balance'] / 100,2); ?>元</span>
+									</div>
+									<div class="text-center">
+										<a class="btn btn-primary btn-lg" href="javascript:;" onclick="AWS.ajax_post($('#account-form'));">提交</a>
+									</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="mod-footer">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<?php TPL::output('m/footer.tpl.htm'); ?>

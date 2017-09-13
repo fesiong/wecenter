@@ -1,0 +1,58 @@
+<?php TPL::output('global/header.tpl.htm'); ?>
+
+<div class="aw-container-wrap">
+	<div class="container">
+		<div class="row">
+			<div class="aw-content-wrap clearfix">
+				<div class="col-sm-12 col-md-9 aw-main-content">
+					<div class="mod mod-favorite">
+						<div class="">
+							<ul class="nav nav-tabs aw-nav-tabs hidden-xs active">
+								<li<?php if ($_GET['act'] == 'send') { ?> class="active"<?php } ?>><a href="shang/send/">送出的赏金</a></li>
+								<li<?php if ($_GET['act'] == 'receive') { ?> class="active"<?php } ?>><a href="shang/receive/">收到的赏金</a></li>
+								<li<?php if ($_GET['act'] == 'withdraw_list') { ?> class="active"<?php } ?>><a href="shang/withdraw_list/">提现记录</a></li>
+								<li<?php if ($_GET['act'] == 'index') { ?> class="active"<?php } ?>><a href="shang/">概览</a></li>
+
+								<h2 class="hidden-xs">我的打赏</h2>
+							</ul>
+						</div>
+						<div class="mod-body" style="padding: 20px;">
+							<table class="table table-bordered text-center">
+								<thead>
+									<tr>
+										<th width="20%">提现金额</th>
+										<th width="20%">提现状态</th>
+										<th width="40%">申请时间</th>
+										<th width="20%">通过时间</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php if($this->withdraw_list){foreach($this->withdraw_list as $key => $val){ ?>
+									<tr>
+										<td><?php echo number_format(($val['money'] / 100),2); ?></td>
+										<td><?php if($val['status'] == shang_class::STATUS_OK){echo '通过';}else if($val['status'] == shang_class::STATUS_WAIT){echo '审核中';}else{echo '拒绝';} ?></td>
+										<td><?php echo date_friendly($val['add_time']); ?></td>
+										<td><?php echo date_friendly($val['pay_time']); ?></td>
+									</tr>
+									<?php }} ?>
+								</tbody>
+							</table>
+						</div>
+						<div class="mod-footer">
+							<?php echo $this->pagination; ?>
+						</div>
+					</div>
+				</div>
+				<!-- 侧边栏 -->
+				<div class="col-sm-12 col-md-3 aw-side-bar">
+					<?php TPL::output('block/sidebar_announce.tpl.htm'); ?>
+
+					<?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
+
+				</div>
+				<!-- end 侧边栏 -->
+			</div>
+		</div>
+	</div>
+</div>
+<?php TPL::output('global/footer.tpl.htm'); ?>

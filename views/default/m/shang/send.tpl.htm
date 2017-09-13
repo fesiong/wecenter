@@ -1,0 +1,50 @@
+<?php TPL::output('m/header.tpl.htm'); ?>
+<div class="aw-title">
+	<?php _e('我的打赏'); ?>
+</div>
+<div class="top-category top">
+	<ul>
+		<li<?php if ($_GET['act'] == 'index') { ?> class="active"<?php } ?>><a href="m/shang/">概览</a></li>
+		<li<?php if ($_GET['act'] == 'withdraw_list') { ?> class="active"<?php } ?>><a href="m/shang/withdraw_list/">提现记录</a></li>
+		<li<?php if ($_GET['act'] == 'receive') { ?> class="active"<?php } ?>><a href="m/shang/receive/">收到的赏金</a></li>
+		<li<?php if ($_GET['act'] == 'send') { ?> class="active"<?php } ?>><a href="m/shang/send/">送出的赏金</a></li>
+	</ul>
+</div>
+	<div class="container" style="background: #fff">
+			<div class="aw-content-wrap clearfix">
+				<div class="row">
+					<div class="mod mod-favorite">
+						<div class="mod-body">
+							<table class="table table-bordered text-center">
+						<thead>
+							<tr>
+								<th width="20%">接收者</th>
+								<th width="10%">赏金</th>
+								<th width="20%">打赏类型</th>
+								<th width="40%" style="display: none">打赏来源</th>
+								<th width="20%">打赏时间</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php if($this->send_list){foreach($this->send_list as $key => $val){ ?>
+							<tr>
+								<td><a href="m/people/<?php echo $val['user_info']['url_token']; ?>" target="_blank"><?php echo $val['user_info']['user_name']; ?></a></td>
+								<td><?php echo number_format($val['money'] / 100,2); ?></td>
+								<td><?php echo $val['item_type']; ?></td>
+								<td style="display: none"><a href="<?php echo $val['item_url']; ?>" target="_blank"><?php echo strip_tags(htmlspecialchars_decode($val['item_title'])); ?></a></td>
+								<td><?php echo date_friendly($val['add_time']); ?></td>
+							</tr>
+							<?php }} ?>
+						</tbody>
+					</table>
+						</div>
+						<div class="mod-footer">
+							<?php echo $this->pagination; ?>
+						</div>
+					</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<?php TPL::output('m/footer.tpl.htm'); ?>

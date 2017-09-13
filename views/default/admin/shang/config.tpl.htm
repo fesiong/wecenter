@@ -1,0 +1,116 @@
+<?php TPL::output('admin/global/header.tpl.htm'); ?>
+<?php TPL::output('admin/global/nav_menu.tpl.htm'); ?>
+
+<div class="aw-content-wrap">
+    <form action="admin/ajax/save_settings/" id="settings_form" method="post" onsubmit="return false">
+    <div class="mod">
+        <div class="mod-head">
+            <h3>
+                <span class="pull-left"><?php _e('支付接口配置'); ?></span>
+
+                <span class="pull-right"><a href="javascript:;" onclick="AWS.ajax_post($('#settings_form'));" class="btn btn-xs btn-primary mod-site-save"><?php _e('快速保存'); ?></a></span>
+            </h3>
+        </div>
+        <div class="tab-content mod-content">
+            <table class="table table-striped">
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label textwrap"><?php _e('支付宝账号'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="alipay_seller_email" type="text" class="form-control" value="<?php echo $this->setting['alipay_seller_email']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label textwrap"><?php _e('支付宝合作身份者 ID'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="alipay_partner" type="text" class="form-control" value="<?php echo $this->setting['alipay_partner']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label textwrap"><?php _e('支付宝安全检验码'); ?>:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="alipay_key" type="text" class="form-control" value="<?php echo $this->setting['alipay_key']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <hr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label textwrap">微信绑定支付的APPID:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="wxpay_openid" type="text" class="form-control" value="<?php echo $this->setting['wxpay_openid']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label textwrap">微信商户号(MCHID):</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="wxpay_mchid" type="text" class="form-control" value="<?php echo $this->setting['wxpay_mchid']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label textwrap">微信商户支付密钥（KEY）:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="wxpay_key" type="text" class="form-control" value="<?php echo $this->setting['wxpay_key']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label textwrap">公众帐号secert:</span>
+                            <div class="col-sm-5 col-xs-8">
+                                <input name="wxpay_appsecret" type="text" class="form-control" value="<?php echo $this->setting['wxpay_appsecret']; ?>"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <span class="col-sm-4 col-xs-3 control-label textwrap">微信支付证书:</span>
+                            <div class="col-sm-5 col-xs-8">
+                            apiclient_cert.pem<br>
+                            apiclient_key.pem<br>
+                            证书请放到路径/models/shang/中，文件名如上
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="tab-content mod-content mod-one-btn">
+            <div class="center-block">
+                <input type="button" value="<?php _e('保存设置'); ?>" class="btn btn-primary" onclick="AWS.ajax_post($('#settings_form'));" />
+            </div>
+        </div>
+    </div>
+    </form>
+</div>
+
+<?php TPL::output('admin/global/footer.tpl.htm'); ?>

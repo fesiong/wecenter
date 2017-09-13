@@ -1,0 +1,53 @@
+<?php TPL::output('global/header.tpl.htm'); ?>
+
+<div class="aw-container-wrap">
+	<div class="container">
+		<div class="row">
+			<div class="aw-content-wrap clearfix">
+				<div class="col-sm-12 col-md-9 aw-main-content">
+					<div class="mod mod-favorite">
+						<div class="">
+							<ul class="nav nav-tabs aw-nav-tabs hidden-xs active">
+								<li<?php if ($_GET['act'] == 'send') { ?> class="active"<?php } ?>><a href="shang/send/">送出的赏金</a></li>
+								<li<?php if ($_GET['act'] == 'receive') { ?> class="active"<?php } ?>><a href="shang/receive/">收到的赏金</a></li>
+								<li<?php if ($_GET['act'] == 'withdraw_list') { ?> class="active"<?php } ?>><a href="shang/withdraw_list/">提现记录</a></li>
+								<li<?php if ($_GET['act'] == 'index') { ?> class="active"<?php } ?>><a href="shang/">概览</a></li>
+
+								<h2 class="hidden-xs">我的打赏</h2>
+							</ul>
+						</div>
+						<div class="mod-body" style="padding: 20px;">
+							<div class="alert">提现金额必须为大于等于2的整数, 提现将会收取提现金额2%的手续费。<br>提现前,请先绑定支付宝账号或绑定微信账号, 否则无法正常提现。提现款项将会转账到该账号绑定的支付宝账号或微信的零钱中。</div>
+							<div class="col-sm-6 col-sm-offset-3">
+								<div class="mod-body">
+									<br>
+									<form id="account-form" method="post" onsubmit="return false;" action="shang/ajax/withdraw_apply/">
+									<div class="form-group">
+										<label>提现金额</label>
+										<input value="0" class="form-control" name="amount" />
+										<span>您最多可以提现<?php echo number_format(($this->user_info['balance'] / 100),2); ?>元</span>
+									</div>
+									<div class="text-center">
+										<a class="btn btn-primary btn-lg" href="javascript:;" onclick="AWS.ajax_post($('#account-form'));">提交</a>
+									</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<div class="mod-footer">
+						</div>
+					</div>
+				</div>
+				<!-- 侧边栏 -->
+				<div class="col-sm-12 col-md-3 aw-side-bar">
+					<?php TPL::output('block/sidebar_announce.tpl.htm'); ?>
+
+					<?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
+
+				</div>
+				<!-- end 侧边栏 -->
+			</div>
+		</div>
+	</div>
+</div>
+<?php TPL::output('global/footer.tpl.htm'); ?>

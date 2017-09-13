@@ -406,7 +406,15 @@ class ajax extends AWS_ADMIN_CONTROLLER
             H::ajax_json_output(AWS_APP::RSM(null, -1, AWS_APP::lang()->_t('不能设置当前分类为父级分类')));
         }
 
-        $this->model('category')->update_category_info($category_id, $_POST['title'], $_POST['parent_id'], $_POST['url_token']);
+        if(!$_POST['type']){
+            $_POST['type'] = 'question';
+        }
+        if($category['parent_id']){
+            $parent = $this->model('system')->get_category_info($category['parent_id']);
+            $_POST['type'] = $parent['type'];
+        }
+
+        $this->model('category')->update_category_info($category_id, $_POST['title'], $_POST['parent_id'], $_POST['url_token'], $_POST['type']);
 
         H::ajax_json_output(AWS_APP::RSM(array(
             'url' => get_js_url('/admin/category/list/')

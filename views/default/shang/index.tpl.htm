@@ -1,0 +1,71 @@
+<?php TPL::output('global/header.tpl.htm'); ?>
+
+<div class="aw-container-wrap">
+	<div class="container">
+		<div class="row">
+			<div class="aw-content-wrap clearfix">
+				<div class="col-sm-12 col-md-9 aw-main-content">
+					<div class="mod mod-favorite">
+						<div class="">
+							<ul class="nav nav-tabs aw-nav-tabs hidden-xs active" style="margin-bottom: 20px;">
+								<li<?php if ($_GET['act'] == 'send') { ?> class="active"<?php } ?>><a href="shang/send/">送出的赏金</a></li>
+								<li<?php if ($_GET['act'] == 'receive') { ?> class="active"<?php } ?>><a href="shang/receive/">收到的赏金</a></li>
+								<li<?php if ($_GET['act'] == 'withdraw_list') { ?> class="active"<?php } ?>><a href="shang/withdraw_list/">提现记录</a></li>
+								<li<?php if ($_GET['act'] == 'index') { ?> class="active"<?php } ?>><a href="shang/">概览</a></li>
+
+								<h2 class="hidden-xs">我的打赏</h2>
+							</ul>
+						</div>
+						<div class="mod-body">
+							<div class="col-sm-6">
+							    <h3>赏金统计</h3>
+								<ul>
+									<li style="margin-bottom: 10px;">已收到赏金 <font size="5" color="red"><?php echo number_format(($this->total['receive'] / 100),2); ?></font> 元</li>
+									<li style="margin-bottom: 10px;">已支出赏金 <font size="5" color="red"><?php echo number_format(($this->total['send']/ 100),2); ?></font> 元</li>
+									<li style="margin-bottom: 10px;">已提现赏金 <font size="5" color="red"><?php echo number_format(($this->total['withdraw'] / 100),2); ?></font> 元</li>
+									<li style="margin-bottom: 10px;">可提现赏金 <font size="5" color="red"><?php echo number_format(($this->total['balance'] / 100),2); ?></font> 元</li>
+								</ul>
+							</div>
+							<div class="col-sm-6">
+								<div class="alert">请绑定支付宝账号，或者绑定微信账号。方便账户提现的时候使用。</div>
+								<?php if(!$this->user_info['alipay_account']){ ?>
+								<form id="account-form" method="post" onsubmit="return false;" action="shang/ajax/save_alipay_account/">
+									<div class="form-group">
+										<label>支付宝真实姓名</label>
+										<input value="<?php echo $this->user_info['real_name']; ?>" class="form-control" name="alipay_name"/>
+									</div>
+									<div class="form-group">
+										<label>支付宝账号</label>
+										<input class="form-control" name="alipay_account" type="text" />
+									</div>
+									<div class="text-center">
+										<a class="btn btn-primary" href="javascript:;" onclick="AWS.ajax_post($('#account-form'));">提交</a>
+									</div>
+								</form>
+								<p>如果您已经绑定微信账号,可以忽略以上信息。</p>
+								<?php }else{ ?>
+								<p>您绑定的支付宝账号是：<?php echo $this->user_info['alipay_account']; ?>(<?php echo $this->user_info['alipay_name']; ?>)</p>
+								<p><a href="javascript:;" onclick="AWS.ajax_request(G_BASE_URL+'/shang/ajax/remove_account/');" class="btn btn-default pull-right">解除支付宝绑定</a></p>
+								<?php } ?>
+								<div class="mod-body">
+									<p><a href="shang/withdraw/" class="btn btn-primary">申请提现</a></p>
+								</div>
+							</div>
+						</div>
+						<div class="mod-footer">
+						</div>
+					</div>
+				</div>
+				<!-- 侧边栏 -->
+				<div class="col-sm-12 col-md-3 aw-side-bar">
+					<?php TPL::output('block/sidebar_announce.tpl.htm'); ?>
+
+					<?php TPL::output('block/sidebar_menu.tpl.htm'); ?>
+
+				</div>
+				<!-- end 侧边栏 -->
+			</div>
+		</div>
+	</div>
+</div>
+<?php TPL::output('global/footer.tpl.htm'); ?>

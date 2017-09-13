@@ -20,12 +20,13 @@ if (!defined('IN_ANWSION'))
 
 class category_class extends AWS_MODEL
 {
-	public function update_category_info($category_id, $title, $parent_id, $url_token)
+	public function update_category_info($category_id, $title, $parent_id, $url_token, $type = 'question')
 	{
 		return $this->update('category', array(
 			'title' => htmlspecialchars($title),
 			'parent_id' => intval($parent_id),
-			'url_token' => $url_token
+			'url_token' => $url_token,
+            'type'      => $type
 		), 'id = ' . intval($category_id));
 	}
 

@@ -989,6 +989,50 @@ blockquote {margin: 0 40px;padding: 0 15px;font-size: 14px;color: #777;border-le
 /* noscript 提示 */
 .aw-noscript{position: absolute;z-index: 100;width: 100%;height: 100%;background-color: #f5f5f5;overflow: hidden;}
 
+/* manual 页面 */
+.aw-aside{position:fixed;width: 250px;top: 52px;left: 0;bottom: 0;z-index: 16;display: block;overflow: hidden;background: #fafafa;border: 1px solid #ddd;}
+.aw-aside .aside-header{border-bottom: 1px solid #ddd; padding: 10px 15px;font-size: 18px;}
+.aw-aside .aside-body{padding: 10px 0;height: 100%;overflow-y: auto;overflow-x: hidden;padding-bottom: 43px;}
+.aw-aside .aside-body .arrow{position: relative;margin-right: 2px;border-left: 10px solid #666;border-top: 7px solid transparent;border-bottom: 7px solid transparent;display: inline-block;vertical-align: middle;}
+.aw-aside .aside-body .open .arrow{position: relative;margin-right: 2px;border-top: 10px solid #666;border-left: 7px solid transparent;border-right: 7px solid transparent;display: inline-block;vertical-align: bottom;}
+.aw-aside .aside-body li a{display:block;padding: 5px 15px;color: #666;}
+.aw-aside .aside-body li a:hover, .aw-aside .aside-body li a.active{background: #eee;}
+.aw-aside .aside-body ul ul{display: none;}
+.aw-aside .aside-body li.open ul{display: block;}
+.aw-aside .aside-body ul ul a{padding-left: 45px;}
+.aw-manual-wrap{position:fixed;left: 250px;right: 0; top: 52px;bottom: 0;background: #fff;padding: 15px;overflow-x: hidden;overflow-y: auto;}
+.aw-manual-wrap.active{left: 0;}
+.aw-manual-wrap .title{text-align: center;font-size: 20px;border-bottom: 1px solid #eee;padding-bottom: 10px;}
+.aw-manual-wrap .content{max-width: 970px;margin: 0 auto;}
+.aw-manual-wrap #aside-btn{padding: 10px;cursor: pointer;}
+.aw-manual-wrap #aside-btn:hover{background: #eee;border-radius: 3px;}
+
+/* 打赏css */
+.operate a.shang-btn{margin-left: 0;color: #fdccb4 !important;background: #fff;border-radius: 4px;border: 1px solid #fdead6;}
+.operate a.shang-btn:hover{background: #fdead6;color: #f60!important;}
+.money-list{padding: 0 15px;}
+.money-box{padding: 10px;}
+.money-box-inner{border: 1px solid #e6e6e6;padding: 10px 0; border-radius: 3px;display: block;text-align: center;}
+.money-box-inner.active{background: rgba(236, 90, 18, 0.04); border: 1px solid #ec5a12;}
+.money-box-inner span{display: block;}
+.money-box-inner .money{color: #333;font-size: 18px;}
+.money-box-inner.active .money{color: #ec5a12;}
+.money-box-inner .tips{color: #999;}
+.pay-way{overflow: hidden;}
+.pay-way a{width: 30%; text-align: center;border: 1px solid #e6e6e6;padding: 10px 0; border-radius: 3px;font-size: 18px;color: #666;margin-right:5%;display: block;float: left;}
+.pay-way a.active{background: rgba(236, 90, 18, 0.04); border: 1px solid #ec5a12;}
+.pay-way a:last-child{margin-right: 0;}
+.pay-way a.disabled{opacity: 0.7;cursor: not-allowed;}
+.article-shang{margin:50px;text-align: center;}
+.article-shang a.pay {background-color: #ff6060;color: #fff;border: 1px solid #ff6060;}
+.article-shang a {position: relative;display: inline-block;width: 60px;height: 60px;text-align: center;line-height: 55px;margin: 0 10px;border-radius: 50%;font-size: 18px;border: 1px solid #e6e6e6;}
+.m-article-shang{padding:20px;margin:0;}
+.last-shang{margin:15px 0;position:relative;overflow: hidden;}
+.shang-title{position:absolute; font-weight: bold;}
+.shang-list{display: table;padding-left: 80px;}
+.shang-list li{ display: table-cell; white-space: nowrap;padding-right:15px;}
+
+
 @media not all, (min-resolution: 192dpi) {
 	.aw-logo a {
 	    background-image: url("img/logo@2x.png");

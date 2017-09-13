@@ -7,6 +7,7 @@
 			<li><a href="home/#all__focus" rel="all__focus"><i class="icon icon-check"></i><?php _e('我关注的问题'); ?></a></li>
 			<li><a href="home/#focus_topic__focus" rel="focus_topic__focus"><i class="icon icon-mytopic"></i><?php _e('我关注的话题'); ?></a></li>
 			<li><a href="home/#invite_list__invite" rel="invite_list__invite"><i class="icon icon-invite"></i><?php _e('邀请我回复的问题'); ?><?php if ($this->user_info['invite_count']) { ?><span class="badge"><?php echo $this->user_info['invite_count']; ?></span><?php } ?></a></li>
+			<li><a href="shang/"<?php if ($_GET['app'] == 'shang') { ?> class="active"<?php } ?>><i class="icon icon-v"></i><?php _e('我的打赏'); ?></a></li>
 		</ul>
 	</div>
 </div>

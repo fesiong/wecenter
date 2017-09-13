@@ -1,0 +1,123 @@
+<?php TPL::output('admin/global/header.tpl.htm'); ?>
+<?php TPL::output('admin/global/nav_menu.tpl.htm'); ?>
+
+<div class="aw-content-wrap" id="user_list">
+    <div class="mod">
+        <div class="mod-head">
+            <h3>
+                <ul class="nav nav-tabs">
+					<li class="active"><a href="admin/shang/list/"><?php _e('打赏记录'); ?></a></li>
+                    <li><a href="admin/shang/withdraw_list/"><?php _e('提现申请'); ?></a></li>
+                    <li><a href="admin/shang/payment/"><?php _e('网站进账'); ?></a></li>
+                    <li><a href="admin/shang/total/"><?php _e('进账统计'); ?></a></li>
+                </ul>
+            </h3>
+        </div>
+        <div class="mod-body tab-content">
+            <div class="tab-pane active" id="list">
+                <a class="btn btn-primary btn-small" href="#search" data-toggle="tab"><?php _e('搜索'); ?></a>
+				<?php if ($_GET['action'] == 'search') { ?>
+                <div class="alert alert-info"><?php _e('找到 %s 条符合条件的内容', intval($this->total_rows)); ?></div>
+                <?php } ?>
+
+                <div class="table-responsive">
+                <?php if ($this->list) { ?>
+                    <form method="post" action="" id="course_form">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><?php _e('打赏时间'); ?></th>
+                                <th><?php _e('打赏金额'); ?></th>
+                                <th><?php _e('被打赏者'); ?></th>
+                                <th width="10%">打赏类型</th>
+                                <th width="40%">打赏来源</th>
+                                <th><?php _e('打赏者'); ?></th>
+								<th><?php _e('操作'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($this->list AS $key => $val) { ?>
+                            <tr>
+                                <td><?php echo date('Y-m-d H:i',$val['add_time']); ?></td>
+                                <td><?php echo ($val['price'] / 100); ?></td>
+                                <td><a href="people/<?php echo $val['item_user_info']['uid']; ?>" target="_blank"><?php echo $val['item_user_info']['user_name']; ?></a></td>
+								<td><?php echo $val['item_type']; ?></td>
+                                <td><a href="<?php echo $val['item_url']; ?>" target="_blank"><?php echo $val['item_title']; ?></a></td>
+                                <td><a href="people/<?php echo $val['user_info']['url_token']; ?>" target="_blank"><?php echo $val['user_info']['user_name']; ?></a></td>
+								<td class="nowrap">
+                                    <a href="admin/shang/<?php echo $val['id']; ?>" class="icon icon-edit md-tip" title="<?php _e('详情'); ?>"></a>
+								</td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                    </form>
+                <?php } ?>
+                </div>
+
+                <div class="mod-table-foot">
+                    <div class="col-xs-12 col-sm-8">
+                        <?php echo $this->pagination; ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane" id="search">
+                <form method="post" action="admin/shang/list/" onsubmit="return false;" id="search_form" class="form-horizontal" role="form">
+
+                    <input name="action" type="hidden" value="search" />
+					<input name="uid" id="user_id" type="hidden" value="" />
+
+                    <div class="form-group">
+                        <label class="col-sm-2 col-xs-3 control-label"><?php _e('用户'); ?>:</label>
+
+                        <div class="col-sm-5 col-xs-8">
+                            <input class="form-control" id="invite-input" type="text" value="<?php echo rawurldecode($_GET['user_name']); ?>" autocomplete="off" name="user_name" />
+							<div class="aw-dropdown">
+									<i class="aw-icon i-dropdown-triangle"></i>
+									<p class="title"><?php _e('没有找到相关结果'); ?></p>
+									<ul class="aw-dropdown-list"></ul>
+								</div>
+								<i class="fa fa-search"></i>
+							</div>
+                    </div>
+					<div class="form-group echart-date">
+                        <label class="col-sm-2 col-xs-3 control-label nopadding">统计时间段:</label>
+                        <div class="col-sm-8 col-xs-9">
+                            <div class="row">
+                                <div class="col-sm-6 mod-double">
+                                    <input type="text" class="form-control mod-data date-start" placeholder="<?php echo date('Y-m-d'); ?>" name="start_date" value="<?php if($_GET['start_date']){echo $_GET['start_date'];}else{echo date('Y-m-d',strtotime('last week'));} ?>">
+                                    <i class="icon icon-date"></i>
+                                </div>
+                               <span class="mod-symbol col-xs-1 col-sm-1">
+                                   -
+                               </span>
+                                <div class="col-sm-6 mod-double">
+                                    <input type="text" class="form-control mod-data date-end" name="end_date" value="<?php echo $_GET['end_date']; ?>">
+                                    <i class="icon icon-date"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-5 col-xs-8">
+                            <button type="button" onclick="AWS.ajax_post($('#search_form'));" class="btn btn-primary"><?php _e('搜索'); ?></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    AWS.Dropdown.bind_dropdown_list($('#invite-input'), 'invite');
+		$(document).on('click', '.aw-dropdown-list a', function () {
+			$('#user_id').val($(this).attr('data-id'));
+			$('#invite-input').val($(this).attr('data-value'));
+		});
+});
+</script>
+
+<?php TPL::output('admin/global/footer.tpl.htm'); ?>

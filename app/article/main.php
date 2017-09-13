@@ -40,6 +40,10 @@ class main extends AWS_CONTROLLER
 			$this->model('notify')->read_notification($_GET['notification_id'], $this->user_id);
 		}
 
+		if($_POST['pay_money']){
+			$this->model('shang')->save_shang($this->user_id, $_POST['item_type'], $_POST['item_id'], $_POST['pay_money'], $_POST['pay_way']);
+		}
+
 		if (is_mobile())
 		{
 			HTTP::redirect('/m/article/' . $_GET['id']);
@@ -67,6 +71,9 @@ class main extends AWS_CONTROLLER
 		}
 
 		$article_info['vote_users'] = $this->model('article')->get_article_vote_users_by_id('article', $article_info['id'], 1, 10);
+
+		//start 如果需要得到该文章被打赏了多少,则在这里查询
+        $article_info['money'] = $this->model('shang')->get_article_shang($article_info['id']);
 
 		TPL::assign('article_info', $article_info);
 

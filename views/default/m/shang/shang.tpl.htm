@@ -1,0 +1,123 @@
+<?php TPL::output('m/header_meta.tpl.htm'); ?>
+<!-- 标题 -->
+<div class="dashang-header">
+	<div class="text-center item-info">
+		<h3><?php echo $this->item_info['item_title']; ?></h3>
+		<span><?php echo $this->item_info['user_info']['user_name']; ?></span>
+	</div>
+</div>
+<div class="user-avatar">
+	<img src="<?php echo get_avatar_url($this->item_info['uid'], 'max'); ?>">
+</div>
+<!-- end 标题 -->
+
+<!-- 内容 -->
+<div class="container">
+	<!-- 草稿列表 -->
+	<div class="center-line">
+		<hr>
+		<span><a>鼓励一下，期待更多精彩</a></span>
+	</div>
+	<div>
+		<form id="quick_pay" method="post" action="m/shang/ajax_payment/" onsubmit="return false;">
+			<input type="hidden" id="pay-money-num" name="pay_money" value="3">
+			<input type="hidden" name="item_id" value="<?php echo $this->item_info['id']; ?>">
+			<input type="hidden" name="item_type" value="<?php echo $_GET['item_type']; ?>">
+			<input type="hidden" id="pay-way-input" name="pay_way" value="weixin">
+			<div>
+				<div class="m-money-box" id="pay-money">
+					<a class="money-box-inner" data-id="1"><span class="money">1 元</span><span class="tips">路过一下</span></a>
+					<a class="money-box-inner active" data-id="3"><span class="money">3 元</span><span class="tips">意思一下</span></a>
+					<a class="money-box-inner" data-id="8"><span class="money">8 元</span><span class="tips">了解一下</span></a>
+					<a class="money-box-inner" data-id="18"><span class="money">18 元</span><span class="tips">支持一下</span></a>
+				</div>
+				<div class="pay-money-input-div">
+					<a id="show-input">自定义金额</a>
+					<div class="input-area" style="display: none">
+						<div class="input-group">
+							<input type="text" id="pay-money-input" class="form-control" placeholder="请输入您要打赏金额数字">
+							<span class="input-group-addon" id="sizing-addon2">元</span>
+						</div>
+					</div>
+				</div>
+				<div class="pay-way">
+					<div class="small">选择支付方式</div>
+					<div class="modal-body pay-way">
+						<a class="active disabled pay-weixin" href="javascript:;" data-id="weixin">微信支付</a>
+						<a class="disabled pay-alipay" href="javascript:;" data-id="alipay">支付宝</a>
+						<a class="disabled pay-balance" href="javascript:;" data-id="balance">余额支付</a>
+					</div>
+				</div>
+			</div>
+			<div class="text-center">
+				<button class="btn btn-large btn-warning" onclick="AWS.ajax_post($('#quick_pay'));">打赏</button>
+				<br>
+			</div>
+		</form>
+	</div>
+</div>
+<!-- end 内容 -->
+<script type="text/javascript">
+var CAN_PAY_WEIXIN   = "<?php echo get_setting('alipay_partner'); ?>";
+var CAN_PAY_ALIPAY   = "<?php echo get_setting('wxpay_openid'); ?>";
+var CAN_PAY_BALANCE  = <?php echo $this->user_info['balance']/100; ?>;
+
+$(document).ready(function () {
+	if(CAN_PAY_WEIXIN){
+	    	$('.pay-weixin').removeClass('disabled');
+    }
+    if(CAN_PAY_ALIPAY){
+    	$('.pay-alipay').removeClass('disabled');
+    }
+    
+	$('#pay-money').find('a').click(function(){
+		$(this).addClass("active").siblings().removeClass("active");
+		$('#pay-money-num').val($(this).data('id'));
+		if($('#pay-money-num').val() > CAN_PAY_BALANCE){
+        	$('.pay-balance').addClass('disabled').removeClass('active');
+        	if($('#pay-way-input').val() == 'balance'){
+        		$('#pay-way-input').val('weixin');
+        		$('.pay-weixin').addClass('active');
+        	}
+        }else{
+        	$('.pay-balance').removeClass('disabled');
+        }
+	});
+	$('#show-input').click(function(){
+		if($('.input-area').is(":visible")){
+			$('.input-area').hide();
+		}else{
+			$('.input-area').show();
+		}
+		
+	});
+	$('#pay-money-input').keyup(function(){
+		var padden = /\D/g;
+		var cash = $('#pay-money-input').val().replace(padden,'');
+		$('#pay-money-input').val(cash);
+		$('#pay-money-num').val(cash);
+		if($('#pay-money-num').val() > CAN_PAY_BALANCE){
+        	$('.pay-balance').addClass('disabled').removeClass('active');
+        	if($('#pay-way-input').val() == 'balance'){
+        		$('#pay-way-input').val('weixin');
+        		$('.pay-weixin').addClass('active');
+        	}
+        }else{
+        	$('.pay-balance').removeClass('disabled');
+        }
+	});
+	$('.pay-way').find('a').click(function(){
+    	if($(this).hasClass('disabled')){
+    		return false;
+    	}
+    	$(this).addClass('active').siblings('a').removeClass('active');
+    	$('#pay-way-input').val($(this).data('id'));
+    });
+});
+
+function goback(){
+	window.location.href = history.go(-1);
+}
+</script>
+
+<?php TPL::output('m/footer.tpl.htm'); ?>

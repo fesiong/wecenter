@@ -29,6 +29,27 @@
 		<div class="aw-question-detail">
 			<div class="mod-head">
 				<h1><?php echo $this->question_info['question_content']; ?></h1>
+				<?php if($this->question_info['add_time'] > (time() - 172800) AND !$this->question_info['has_pay']){ ?>
+				<div style="padding-top:5px; color:#999;font-size:12px;">
+					你可以为该问题提供打赏，让更多人参与解答。<a href="m/shang/shang/<?php echo $this->question_info['question_id']; ?>?item_type=question" class="btn btn-xs btn-danger"><?php if(!$this->question_info['money']){ ?>红包<?php }else{ ?>追加<?php } ?>打赏</a>
+					<a onclick="alert('打赏后三天(72小时)内，由发起人确定最佳回复者，获得赏金。发起人未确定最佳回复者，则系统自动分配给票数前三名。');" href="javascript:;">打赏说明</a>
+				</div>
+				<?php } ?>
+				<?php if($this->question_info['money']){ ?>
+				<div style="padding-top:5px; color:#999;font-size:12px;">
+					该问题为悬赏问题，赏金为：<span style="color:red"><?php echo number_format($this->question_info['money'] / 100, 2); ?>元</span>
+					<?php if($this->question_info['has_pay']){ ?>已由
+					<?php
+										$users = array();
+										foreach($this->order_users as $val){
+					$users[] = $val['user_name'];
+					}
+					echo implode('、', $users);
+					?>
+					领取<?php } ?>
+					<a onclick="alert('打赏后三天(72小时)内，由发起人确定最佳回复者，获得赏金。发起人未确定最佳回复者，则系统自动分配给票数前三名。');">赏金说明</a>
+				</div>
+				<?php } ?>
 			</div>
 			<div class="mod-body">
 				<div class="markitup-box clearfix">
@@ -131,6 +152,9 @@
 						</div>
 						<div class="mod-footer">
 							<div class="meta">
+								<span class="operate">
+									<a class="shang-btn" href="m/shang/shang/<?php echo $val['answer_id']; ?>?item_type=answer" data-placement="bottom" title="" data-toggle="tooltip" data-original-title="回答求赏">赏 <b class="count"><?php echo number_format($val['money'] / 100, 2); ?></b></a>
+								</span>
 								<span class="operate">
 									<a class="answer_vote agree <?php if ($val['agree_status'] == 1) { ?> active<?php } ?>" <?php if ($this->user_id) { ?>onclick="AWS.User.agree_vote($(this), <?php echo $val['answer_id']; ?>)"<?php } ?>><i class="icon icon-agree"></i> <b><?php echo $val['agree_count']; ?></b></a>
 									<?php if ($this->user_id != $val['uid']) { ?>

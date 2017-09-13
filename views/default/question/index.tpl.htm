@@ -52,6 +52,27 @@
 							<h1>
 								<?php echo $this->question_info['question_content']; ?>
 							</h1>
+							<?php if($this->question_info['add_time'] > (time() - 172800) AND !$this->question_info['has_pay']){ ?>
+								<div style="padding-top:5px; color:#999;font-size:12px;">
+									你可以为该问题提供打赏，让更多人参与解答。<a href="javascript:;" onclick="AWS.shang({item_id:<?php echo $this->question_info['question_id']; ?>, item_type:'question', user_name:'<?php  echo $this->question_info['user_info']['user_name']; ?>'});" class="btn btn-xs btn-danger"><?php if(!$this->question_info['money']){ ?>红包<?php }else{ ?>追加<?php } ?>打赏</a>
+									<a onclick="AWS.alert('打赏后三天(72小时)内，由发起人确定最佳回复者，获得赏金。发起人未确定最佳回复者，则系统自动分配给票数前三名。');" href="javascript:;"> 打赏说明</a>
+								</div>
+							<?php } ?>
+							<?php if($this->question_info['money']){ ?>
+								<div style="padding-top:5px; color:#999;font-size:12px;">
+									该问题为悬赏问题，赏金为：<span style="color:red"><?php echo number_format($this->question_info['money'] / 100, 2); ?>元</span>
+									<?php if($this->question_info['has_pay']){ ?>已由
+									<?php
+										$users = array();
+										foreach($this->order_users as $val){
+									$users[] = $val['user_name'];
+									}
+									echo implode('、', $users);
+									?>
+									领取<?php } ?>
+									<a onclick="AWS.alert('打赏后三天(72小时)内，由发起人确定最佳回复者，获得赏金。发起人未确定最佳回复者，则系统自动分配给票数前三名。');">赏金说明</a>
+								</div>
+							<?php } ?>
 
 							<?php if ($this->user_id) { ?>
 							<div class="operate clearfix">
@@ -360,6 +381,10 @@
 											<span class="text-color-999 pull-right"><?php echo date_friendly($val['add_time'], 604800, 'Y-m-d'); ?></span>
 											<!-- 投票栏 -->
 											<span class="operate">
+												<a class="shang-btn" data-placement="bottom" title="" data-toggle="tooltip" data-original-title="回答求赏" onclick="AWS.shang({item_id:<?php echo $val['answer_id']; ?>, item_type:'answer', user_name:'<?php  echo $val['user_info']['user_name']; ?>'});">赏 <b class="count"><?php echo number_format($val['money'] / 100, 2); ?></b></a>
+											</span>
+
+											<span class="operate">
 												<a class="agree<?php if ($this->user_info['user_name'] == $val['user_info']['user_name']) { ?> disabled<?php } ?> <?php if ($val['agree_status'] == 1) { ?>active<?php } ?> <?php if (!$this->user_id) { ?>disabled<?php } ?>" <?php if ($this->user_id && $this->user_info['user_name'] != $val['user_info']['user_name']) { ?>onclick="AWS.User.agree_vote(this, '<?php echo $this->user_info['user_name']; ?>', <?php echo $val['answer_id']; ?>);"<?php } ?>><i data-placement="right" title="" data-toggle="tooltip" class="icon icon-agree" data-original-title="赞同回复"></i> <b class="count"><?php echo $val['agree_count']; ?></b></a>
 												<?php if ($this->user_id AND $this->user_info['user_name'] != $val['user_info']['user_name']) { ?>
 												<a class="disagree <?php if ($val['agree_status'] == -1) { ?>active<?php } ?>" onclick="AWS.User.disagree_vote(this, '<?php echo $this->user_info['user_name']; ?>', <?php echo $val['answer_id']; ?>)"><i data-placement="right" title="" data-toggle="tooltip" class="icon icon-disagree" data-original-title="对回复持反对意见"></i></a>
@@ -623,6 +648,9 @@
 	var USER_ANSWERED = '<?php echo $this->user_answered; ?>';
 	var UPLOAD_ENABLE = '<?php echo get_setting('upload_enable') ?>';
 	var ANSWER_TYPE = 'answer';
+    var CAN_PAY_WEIXIN   = "<?php echo get_setting('alipay_partner'); ?>";
+    var CAN_PAY_ALIPAY   = "<?php echo get_setting('wxpay_openid'); ?>";
+    var CAN_PAY_BALANCE  = <?php echo $this->user_info['balance']/100; ?>;
 </script>
 
 <script type="text/javascript" src="<?php echo G_STATIC_URL; ?>/js/app/question_detail.js"></script>

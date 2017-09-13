@@ -1,0 +1,71 @@
+<?php TPL::output('admin/global/header.tpl.htm'); ?>
+<?php TPL::output('admin/global/nav_menu.tpl.htm'); ?>
+
+<div class="aw-content-wrap" id="user_list">
+    <div class="mod">
+        <div class="mod-head">
+            <h3>
+                <ul class="nav nav-tabs">
+					<li><a href="admin/shang/list/"><?php _e('打赏记录'); ?></a></li>
+                    <li class="active"><a href="admin/shang/withdraw_list/"><?php _e('提现申请'); ?></a></li>
+                    <li><a href="admin/shang/payment/"><?php _e('网站进账'); ?></a></li>
+                    <li><a href="admin/shang/total/"><?php _e('进账统计'); ?></a></li>
+                </ul>
+            </h3>
+        </div>
+        <div class="mod-body tab-content">
+            <div class="tab-pane active" id="list">
+                <ul style="overflow: hidden;">
+                    <li class="pull-left btn"><a href="admin/shang/withdraw_list/">全部</a></li>
+                    <li class="pull-left btn"><a href="admin/shang/withdraw_list/status-1">提现完成</a></li>
+                    <li class="pull-left btn"><a href="admin/shang/withdraw_list/status-0">等待审核</a></li>
+                    <li class="pull-left btn"><a href="admin/shang/withdraw_list/status-2">审核不通过</a></li>
+                </ul>
+                <a class="btn btn-primary btn-small hidden" href="#search" data-toggle="tab"><?php _e('搜索'); ?></a>
+				<?php if ($_GET['action'] == 'search') { ?>
+                <div class="alert alert-info"><?php _e('找到 %s 条符合条件的内容', intval($this->total_rows)); ?></div>
+                <?php } ?>
+
+                <div class="table-responsive">
+                <?php if ($this->withdraw_list) { ?>
+                    <form method="post" action="" id="course_form">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th><?php _e('申请时间'); ?></th>
+                                <th><?php _e('提现金额'); ?></th>
+                                <th><?php _e('申请用户'); ?></th>
+                                <th><?php _e('状态'); ?></th>
+								<th><?php _e('操作'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($this->withdraw_list AS $key => $val) { ?>
+                            <tr>
+                                <td><?php echo date('Y-m-d H:i',$val['add_time']); ?></td>
+                                <td><?php echo ($val['price'] / 100); ?>元</td>
+                                <td><a href="people/<?php echo $val['uid']; ?>" target="_blank"><?php echo $val['user_info']['user_name']; ?></a></td>
+								<td><?php if($val['status'] == shang_class::STATUS_OK){echo '通过';}else if($val['status'] == shang_class::STATUS_WAIT){echo '审核中';}else{echo '拒绝';} ?></td>
+								<td class="nowrap">
+                                    <a href="admin/shang/withdraw_apply/<?php echo $val['id']; ?>" class="icon icon-edit md-tip" title="<?php _e('详情'); ?>"></a>
+								</td>
+                            </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                    </form>
+                <?php } ?>
+                </div>
+
+                <div class="mod-table-foot">
+                    <div class="col-xs-12 col-sm-8">
+                        <?php echo $this->pagination; ?>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<?php TPL::output('admin/global/footer.tpl.htm'); ?>

@@ -17,6 +17,7 @@
                     <thead>
                     <tr>
                         <th><?php _e('分类标题'); ?></th>
+                        <th><?php _e('所属类别'); ?></th>
                         <th><?php _e('排序'); ?></th>
                         <th><?php _e('操作'); ?></th>
                     </tr>
@@ -27,6 +28,9 @@
                     <tr>
                         <td>
                             <a href="explore/category-<?php echo ($val['url_token']) ? $val['url_token'] : $val['id']; ?>"><?php echo $val['title']; ?></a>
+                        </td>
+                        <td>
+                            <?php echo $val['type']; ?>
                         </td>
                         <td>
                             <div class="col-sm-6 clo-xs-12 col-lg-offset-3">
@@ -44,25 +48,33 @@
                     </tbody>
                     <tfoot class="mod-foot-center">
                     <tr>
-                        <td colspan="3">
+                        <td colspan="4">
                         <form id="add_category_form" action="admin/ajax/save_category/" method="post" onsubmit="return false">
-                            <div class="form-group col-sm-5">
+                            <div class="form-group col-sm-4">
                                 <span  class="col-sm-3 col-xs-12 mod-category-foot"><?php _e('分类标题'); ?></span>
-                                <div class="col-sm-6 col-xs-12">
+                                <div class="col-sm-9 col-xs-12">
                                     <input type="text" class="form-control" name="title" />
                                 </div>
                             </div>
-
-                            <div class="form-group col-sm-5">
+                            <div class="form-group col-sm-4">
                                 <span class="col-sm-3 col-xs-12 mod-category-foot"><?php _e('父级分类') ?>:</span>
-                                <div class="col-sm-6 col-xs-12">
+                                <div class="col-sm-9 col-xs-12">
                                     <select name="parent_id" class="form-control">
                                         <option value="0"><?php _e('无'); ?></option>
                                         <?php echo $this->category_option; ?>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-xs-12">
+                            <div class="form-group col-sm-3">
+                                <span  class="col-sm-3 col-xs-12 mod-category-foot"><?php _e('分类类别'); ?></span>
+                                <div class="col-sm-9 col-xs-12">
+                                    <select name="type" class="form-control">
+                                        <option value="question"><?php _e('问题分类'); ?></option>
+                                        <option value="manual"><?php _e('开发文档'); ?></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-1 col-xs-12">
                              <a onclick="AWS.ajax_post($('#add_category_form'));" class="btn-primary btn"><?php _e('添加分类'); ?></a>
                             </div>
                         </form>

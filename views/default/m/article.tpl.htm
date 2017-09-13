@@ -49,6 +49,14 @@
 					</ul>
 					<?php } ?>
 				</div>
+				<div class="article-shang m-article-shang">
+					<a class="pay" href="m/shang/shang/<?php echo $this->article_info['id']; ?>?item_type=article">
+						赏
+					</a>
+					<?php if($this->article_info['money']){ ?>
+					<p class="text-muted">已收到赏金:<?php echo number_format($this->article_info['money'] / 100, 2); ?>元</p>
+					<?php } ?>
+				</div>
 			</div>
 			<div class="mod-footer active">
 				<span class="pull-right">

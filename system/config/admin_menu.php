@@ -92,6 +92,12 @@ $config[] = array(
             'id' => 303,
             'title' => AWS_APP::lang()->_t('话题管理'),
             'url' => 'admin/topic/list/'
+        ),
+
+        array(
+            'id' => 321,
+            'title' => AWS_APP::lang()->_t('开发文档'),
+            'url' => 'admin/manual/list/'
         )
     )
 );
@@ -300,6 +306,23 @@ $config[] = array(
             'title' => AWS_APP::lang()->_t('系统维护'),
             'url' => 'admin/tools/',
         )
+    )
+);
+
+$config[] = array(
+    'title' => AWS_APP::lang()->_t('打赏'),
+    'cname' => 'signup',
+    'children' => array(
+        array(
+            'id' => 1111,
+            'title' => AWS_APP::lang()->_t('打赏'),
+            'url' => 'admin/shang/list/'
+        ),
+        array(
+            'id' => 1112,
+            'title' => AWS_APP::lang()->_t('支付接口配置'),
+            'url' => 'admin/shang/config/'
+        ),
     )
 );
 
