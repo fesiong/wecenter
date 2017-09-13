@@ -574,6 +574,7 @@ class WxPayApi extends AWS_MODEL
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $xml);
 		//运行curl
 		$data = curl_exec($ch);
+		
 		//返回结果
 		if($data){
 			curl_close($ch);
