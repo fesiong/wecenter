@@ -106,7 +106,7 @@ class shang_class extends AWS_MODEL
                 'url' => get_js_url('/m/shang/payment/id-' . $order_id . '__pay_way-' . $pay_way)
             ), 1, null));
         }
-        
+
         return $this->make_payment($order_id);
     }
 
@@ -174,9 +174,9 @@ class shang_class extends AWS_MODEL
                     $input->SetNotify_url(get_js_url('/shang/wx_notify/'));
                     $input->SetTrade_type("NATIVE");
                     $input->SetProduct_id($order['item_id']);
-                    //$result = $notify->GetPayUrl($input);
+                    $result = $notify->GetPayUrl($input);
                     $url = $result["code_url"];
-                    $qr_code = get_js_url('/shang/qrcode/?data=11111' . urlencode($url));
+                    $qr_code = get_js_url('/shang/qrcode/?data=' . urlencode($url));
 
                     H::ajax_json_output(AWS_APP::RSM(null, 1, '<div style="text-align:center"><div>打开微信扫一扫 支付</div><img width="200" src="'.$qr_code.'"></div><script>setInterval(function(){$.get("'. get_js_url('shang/check_pay/' . $order['order_id']) .'", function(data){if(data == 1){FE.alert("付款成功，感谢您的支持！");setTimeout(function(){window.location.href = "'.get_js_url(str_replace('/?/', '/', $_SERVER['REQUEST_URI'])).'";}, 3000);}});},5000);</script>'));
                     //END

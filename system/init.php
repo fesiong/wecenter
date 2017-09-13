@@ -45,7 +45,7 @@ if (defined('SAE_TMP_PATH'))
 
 define('ROOT_PATH', dirname(dirname(__FILE__)) . '/');
 
-@ini_set('display_errors', '0');
+@ini_set('display_errors', '1');
 
 if (defined('IN_SAE'))
 {
