@@ -1,4 +1,4 @@
-F@<?php
+<?php
 /**
  * WeCenter Framework
  *
