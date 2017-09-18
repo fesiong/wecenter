@@ -231,10 +231,10 @@ class AWS_CONTROLLER
 
 		foreach ($this->crumb as $key => $crumb)
 		{
-			$title = $crumb['name'] . ' - ' . $title;
+			$title = $crumb['name'] . '_' . $title;
 		}
 
-		TPL::assign('page_title', htmlspecialchars(rtrim($title, ' - ')));
+		TPL::assign('page_title', htmlspecialchars(rtrim($title, '_')));
 
 		return $this;
 	}
