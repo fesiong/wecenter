@@ -294,6 +294,11 @@ class publish_class extends AWS_MODEL
 			// 自动关注该问题
 			$this->model('question')->add_focus_question($question_id, $uid, $anonymous, false);
 
+			//添加到sitemap
+			$this->model('sitemap')->add_to_sitemap('question', get_js_url('/question/' . $question_id));
+			//百度主动推送
+			$this->model('sitemap')->put_spider(get_js_url('/question/' . $question_id));
+
 			// 记录日志
 			ACTION_LOG::save_action($uid, $question_id, ACTION_LOG::CATEGORY_QUESTION, ACTION_LOG::ADD_QUESTION, $question_content, $question_detail, 0, intval($anonymous));
 
@@ -348,6 +353,11 @@ class publish_class extends AWS_MODEL
 			}
 
 			$this->model('search_fulltext')->push_index('article', $title, $article_id);
+
+			//添加到sitemap
+			$this->model('sitemap')->add_to_sitemap('article', get_js_url('/article/' . $article_id));
+			//百度主动推送
+			$this->model('sitemap')->put_spider(get_js_url('/article/' . $article_id));
 
 			// 记录日志
 			ACTION_LOG::save_action($uid, $article_id, ACTION_LOG::CATEGORY_QUESTION, ACTION_LOG::ADD_ARTICLE, $title, $message, 0);

@@ -13,3 +13,4 @@
 .idea
 /models/shang/apiclient_cert.pem
 /models/shang/apiclient_key.pem
+/sitemap*

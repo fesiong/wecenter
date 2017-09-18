@@ -322,4 +322,10 @@ class tools extends AWS_ADMIN_CONTROLLER
 
         H::redirect_msg(AWS_APP::lang()->_t($messages), '/admin/weixin/mp_menu/');
     }
+
+    public function update_sitemap_action(){
+        $this->model('sitemap')->make_sitemap();
+
+        H::redirect_msg(AWS_APP::lang()->_t('sitemap更新完成'), '/admin/tools/');
+    }
 }

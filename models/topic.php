@@ -240,6 +240,11 @@ class topic_class extends AWS_MODEL
 
 				$this->add_focus_topic($uid, $topic_id);
 			}
+
+			//添加到sitemap
+			$this->model('sitemap')->add_to_sitemap('topic', get_js_url('/topic/' . htmlspecialchars($topic_title)));
+			//百度主动推送
+			$this->model('sitemap')->put_spider(get_js_url('/topic/' . htmlspecialchars($topic_title)));
 		}
 		else
 		{
