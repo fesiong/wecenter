@@ -72,7 +72,7 @@ class sitemap_class extends AWS_MODEL
 			for($i = 1; $i <= ceil($this->question_counter/$this->sitemap_limit); $i++){
 				$sitemap_file = ROOT_PATH . sitemap_generator::get_sitemap_url('question', $i);
 				$sitemap = new sitemap_generator($sitemap_file, 'sitemap');
-				$datas = $this->query_all("select question_id,add_time from " . get_table('question'), $this->sitemap_limit, ($i-1)*$this->sitemap_limit);
+				$datas = $this->query_all("select question_id,add_time from " . get_table('question') . " order by add_time desc", $this->sitemap_limit, ($i-1)*$this->sitemap_limit);
 				foreach ($datas as $key => $item) {
 					$sitemap->add_url(get_js_url('/question/' . $item['question_id']), date('Y-m-d H:i', $item['add_time']));
 				}
@@ -82,7 +82,7 @@ class sitemap_class extends AWS_MODEL
 		}else{
 			$sitemap_file = ROOT_PATH . sitemap_generator::get_sitemap_url('question');
 			$sitemap = new sitemap_generator($sitemap_file, 'sitemap');
-			$datas = $this->query_all("select question_id,add_time from " . get_table('question'));
+			$datas = $this->query_all("select question_id,add_time from " . get_table('question') . " order by add_time desc");
 
 			foreach ($datas as $key => $item) {
 				$sitemap->add_url(get_js_url('/question/' . $item['question_id']), date('Y-m-d H:i', $item['add_time']));
@@ -97,7 +97,7 @@ class sitemap_class extends AWS_MODEL
 			for($i = 1; $i <= ceil($this->article_counter/$this->sitemap_limit); $i++){
 				$sitemap_file = ROOT_PATH . sitemap_generator::get_sitemap_url('article', $i);
 				$sitemap = new sitemap_generator($sitemap_file, 'sitemap');
-				$datas = $this->query_all("select id,add_time from " . get_table('article'), $this->sitemap_limit, ($i-1)*$this->sitemap_limit);
+				$datas = $this->query_all("select id,add_time from " . get_table('article') . " order by add_time desc", $this->sitemap_limit, ($i-1)*$this->sitemap_limit);
 				foreach ($datas as $key => $item) {
 					$sitemap->add_url(get_js_url('/article/' . $item['id']), date('Y-m-d H:i', $item['add_time']));
 				}
@@ -107,7 +107,7 @@ class sitemap_class extends AWS_MODEL
 		}else{
 			$sitemap_file = ROOT_PATH . sitemap_generator::get_sitemap_url('article');
 			$sitemap = new sitemap_generator($sitemap_file, 'sitemap');
-			$datas = $this->query_all("select id,add_time from " . get_table('article'));
+			$datas = $this->query_all("select id,add_time from " . get_table('article') . " order by add_time desc");
 
 			foreach ($datas as $key => $item) {
 				$sitemap->add_url(get_js_url('/article/' . $item['id']), date('Y-m-d H:i', $item['add_time']));
@@ -122,7 +122,7 @@ class sitemap_class extends AWS_MODEL
 			for($i = 1; $i <= ceil($this->topic_counter/$this->sitemap_limit); $i++){
 				$sitemap_file = ROOT_PATH . sitemap_generator::get_sitemap_url('topic', $i);
 				$sitemap = new sitemap_generator($sitemap_file, 'sitemap');
-				$datas = $this->query_all("select topic_id,topic_title,url_token,add_time from " . get_table('topic'), $this->sitemap_limit, ($i-1)*$this->sitemap_limit);
+				$datas = $this->query_all("select topic_id,topic_title,url_token,add_time from " . get_table('topic') . " order by add_time desc", $this->sitemap_limit, ($i-1)*$this->sitemap_limit);
 				foreach ($datas as $key => $item) {
 					if(!$item['url_token']){
 						$item['url_token'] = $item['topic_title'];
@@ -135,7 +135,7 @@ class sitemap_class extends AWS_MODEL
 		}else{
 			$sitemap_file = ROOT_PATH . sitemap_generator::get_sitemap_url('topic');
 			$sitemap = new sitemap_generator($sitemap_file, 'sitemap');
-			$datas = $this->query_all("select topic_id,topic_title,url_token,add_time from " . get_table('topic'));
+			$datas = $this->query_all("select topic_id,topic_title,url_token,add_time from " . get_table('topic') . " order by add_time desc");
 
 			foreach ($datas as $key => $item) {
 				if(!$item['url_token']){
@@ -206,19 +206,23 @@ class sitemap_generator
         return true;
 	}
 
-	public function add_sitemap($type, $page = 1, $last_mod = 0){
+	public function add_sitemap($type, $page = 1, $lastmod = 0){
 		$url = static::get_sitemap_url($type, $page, true);
 
 		$rating = $this->sitemap->addChild('sitemap');
 		$rating->addChild('loc',$url);
-        $rating->addChild('lastmod',$lastmod);
+        if($lastmod){
+            $rating->addChild('lastmod',$lastmod);
+        }
 	}
 
 	public function add_url($loc, $lastmod = 0, $changefreq = "daily", $priority = 0.8){
 		$rating = $this->sitemap->addChild('url');
 		$rating->addChild('loc',$loc);
         $rating->addChild('priority',$priority);
-        $rating->addChild('lastmod',$lastmod);
+        if($lastmod){
+            $rating->addChild('lastmod',$lastmod);
+        }
         $rating->addChild('changefreq',$changefreq);
 	}
 
