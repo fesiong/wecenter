@@ -523,6 +523,10 @@ class main extends AWS_CONTROLLER
 			'js/fileupload.js'
 		));
 
+		TPL::set_meta('keywords', implode(',', $this->model('system')->analysis_keyword($question_info['question_content'])));
+
+		TPL::set_meta('description', $question_info['question_content'] . ' - ' . cjk_substr(str_replace("\r\n", ' ', strip_tags($question_info['question_detail'])), 0, 128, 'UTF-8', '...'));
+
 		TPL::output('m/question');
 	}
 
@@ -985,6 +989,23 @@ class main extends AWS_CONTROLLER
 
 		TPL::assign('best_answer_users', $this->model('topic')->get_best_answer_users_by_topic_id($topic_info['topic_id'], 5));
 
+		$related_topics_ids = array();
+
+		$page_keywords[] = $topic_info['topic_title'];
+
+		if ($related_topics = $this->model('topic')->related_topics($topic_info['topic_id']))
+		{
+			foreach ($related_topics AS $key => $val)
+			{
+				$related_topics_ids[$val['topic_id']] = $val['topic_id'];
+
+				$page_keywords[] = $val['topic_title'];
+			}
+		}
+
+		TPL::set_meta('keywords', implode(',', $page_keywords));
+		TPL::set_meta('description', cjk_substr(str_replace("\r\n", ' ', strip_tags($topic_info['topic_description'])), 0, 128, 'UTF-8', '...'));
+
 		TPL::output('m/topic');
 	}
 
@@ -1167,6 +1188,10 @@ class main extends AWS_CONTROLLER
 			'total_rows' => $article_info['comments'],
 			'per_page' => 100
 		))->create_links());
+
+		TPL::set_meta('keywords', implode(',', $this->model('system')->analysis_keyword($article_info['title'])));
+
+		TPL::set_meta('description', $article_info['title'] . ' - ' . cjk_substr(str_replace("\r\n", ' ', strip_tags($article_info['message'])), 0, 128, 'UTF-8', '...'));
 
 		TPL::output('m/article');
 	}

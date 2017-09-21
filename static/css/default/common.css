@@ -1032,6 +1032,7 @@ blockquote {margin: 0 40px;padding: 0 15px;font-size: 14px;color: #777;border-le
 .shang-title{position:absolute; font-weight: bold;}
 .shang-list{display: table;padding-left: 80px;}
 .shang-list li{ display: table-cell; white-space: nowrap;padding-right:15px;}
+.tag-shang{color: #fff;background: #f60;border-radius: 3px;padding: 3px 7px;font-size:12px;margin-left: 5px;}
 
 
 @media not all, (min-resolution: 192dpi) {

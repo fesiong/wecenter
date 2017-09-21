@@ -6,6 +6,9 @@
 		<h4>
 			<?php if ($val['question_id']) { ?>
 			<a href="question/<?php echo $val['question_id']; ?>"><?php echo $val['question_content']; ?></a>
+			<?php if($val['money']){ ?>
+				<span class="tag-shang">¥ <?php echo $val['money']; ?></span>
+			<?php } ?>
 			<?php } else { ?>
 			<a href="article/<?php echo $val['id']; ?>"><?php echo $val['title']; ?></a>
 			<?php } ?>

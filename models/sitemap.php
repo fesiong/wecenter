@@ -5,9 +5,9 @@
 |   ========================================
 |   by WeCenter Software
 |   © 2011 - 2014 WeCenter. All Rights Reserved
-|   http://www.wecenter.com
+|   http://www.kandaoni.com
 |   ========================================
-|   Support: WeCenter@qq.com
+|   Support: 61470255@qq.com
 |
 +---------------------------------------------------------------------------
 */
