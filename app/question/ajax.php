@@ -1019,7 +1019,7 @@ class ajax extends AWS_CONTROLLER
 
 		//当设置为最佳回复的时候,则悬赏金额归最佳回复作者所有。
         if(!$question_info['has_pay']){
-            $this->model('shang')->set_ok_question_shang($this->user_id, $question_info['price'], $answer_info['answer_id']);
+            $this->model('shang')->set_ok_question_shang($this->user_id, $question_info['money'], $answer_info['answer_id']);
             $this->model('shang')->set_question_has_pay($question_info['question_id']);
         }
         //end
